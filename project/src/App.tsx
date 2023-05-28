@@ -1,7 +1,7 @@
-import Component from "./components/Component";
+import ListItem from "./components/ListItem";
 function App() {
   return <>
-  <Component></Component>
+  <ListItem></ListItem>
   </>;
 }
 
