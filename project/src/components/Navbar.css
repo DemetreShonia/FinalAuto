@@ -1,0 +1,154 @@
+.navbar {
+  background-color: white;
+  width: 250px;
+  height: 520px;
+  border: 1px solid #e2e5eb;
+  border-radius: 10px 10px 0 0;
+  
+}
+.options {
+  display: flex;
+  justify-content: space-around;
+}
+.btn {
+  height: 48px;
+  width: 83px;
+  left: 16px;
+  top: 9px;
+  border: 1px solid #e2e5eb;
+  cursor: pointer;
+}
+.options :hover {
+  background-color: white;
+}
+
+.left {
+  border-radius: 10px 0 0 0;
+}
+
+.right {
+  border-radius: 0 10px 0 0;
+}
+
+.chosen {
+  border-bottom: 1px solid #fd4100;
+  background-color: white;
+}
+
+.img {
+  width: 26px;
+}
+
+.DealTypeContainer {
+  background-color: white;
+}
+
+.Garigeba {
+  width: 202px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid #e2e5eb;
+  border-radius: 5px;
+  margin: auto;
+  cursor: pointer;
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.arrow.rotate {
+  transform: rotate(180deg);
+}
+
+.checkboxCover {
+  display: flex;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.Garigeba-options {
+  width: 202px;
+  margin: auto;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 12px 8px 12px 12px;
+  box-sizing: border-box;
+  border: 1px solid #e2e5eb;
+  border-bottom: none;
+}
+
+.checkboxesInside {
+  border-left: 1px solid rgb(126, 126, 126);
+  margin-left: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-left: 15px;
+  padding-bottom: 10px;
+}
+
+.checker {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1px solid rgb(126, 126, 126);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 15px;
+  color: white;
+  cursor: pointer;
+}
+
+.checkered {
+  background-color: #fd4100;
+}
+
+.emptyFilter {
+  width: 202px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 5px;
+  border: 1px solid #e2e5eb;
+  border-radius: 0 0 10px 10px;
+}
+
+.emptyFilter-txt{
+    cursor: pointer;
+}
+.searchBtn {
+  background-color: #fd4100;
+  color: white;
+  height: 25px;
+  width: 60px;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.deal_type {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 15px;
+  margin: 15px 0;
+  margin-left: 24px;
+}
