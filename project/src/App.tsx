@@ -1,8 +1,7 @@
 import ListItem from "./components/ListItem";
+
 function App() {
-  return <>
-  <ListItem></ListItem>
-  </>;
+  return <><ListItem></ListItem></>;
 }
 
 export default App;

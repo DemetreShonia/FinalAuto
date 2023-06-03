@@ -1,0 +1,49 @@
+.listItem{
+    height: 172px;
+    width: 780px;
+    left: 0px;
+    top: 0px;
+    border-radius: 14px;
+
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+
+    /* primary/white */
+    background: #FFFFFF;
+    border-radius: 14px;
+    display: flex;
+    border-color: cornflowerblue;
+    border-style: dashed;
+}
+.photo{
+    left: -4px;
+    top: -3px;
+    border-radius: 8px;
+    width: 182px;
+    height: 144px;
+    left: -2.25%;
+    right: 0%;
+    top: -2.14%;
+    bottom: -0.71%;
+    background:url(https://static.my.ge/myauto/photos/8/1/6/0/6/large/92606186_6.jpg?v=7);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-color: cornflowerblue;
+    border-style: dashed;
+    margin-top: 13px;
+    margin-bottom: 15px;
+    margin-left: 12px;
+    margin-right: ;
+
+
+}
+.info{
+    background-color:#FFFFFF;;
+    width: 100%;
+    border-color: crimson;
+    border-style: dashed;
+}
