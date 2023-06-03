@@ -1,8 +1,10 @@
 .navbar {
+  background-color: white;
   width: 250px;
   height: 520px;
   border: 1px solid #e2e5eb;
   border-radius: 10px 10px 0 0;
+  
 }
 .options {
   display: flex;
@@ -30,6 +32,7 @@
 
 .chosen {
   border-bottom: 1px solid #fd4100;
+  background-color: white;
 }
 
 .img {
@@ -49,6 +52,7 @@
   border: 1px solid #e2e5eb;
   border-radius: 5px;
   margin: auto;
+  cursor: pointer;
 }
 
 .arrow {
@@ -68,16 +72,17 @@
 }
 
 .Garigeba-options {
-    width: 202px;
-    margin: auto;
-    margin-top: 10px;
+  width: 202px;
+  margin: auto;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 15px;
   padding: 12px 8px 12px 12px;
   box-sizing: border-box;
   border: 1px solid #e2e5eb;
-  border-bottom: none;}
+  border-bottom: none;
+}
 
 .checkboxesInside {
   border-left: 1px solid rgb(126, 126, 126);
@@ -120,6 +125,9 @@
   border-radius: 0 0 10px 10px;
 }
 
+.emptyFilter-txt{
+    cursor: pointer;
+}
 .searchBtn {
   background-color: #fd4100;
   color: white;
@@ -133,14 +141,14 @@
   cursor: pointer;
 }
 
-.deal_type{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.deal_type {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.title{
-    font-size: 15px;
-    margin: 15px 0;
-    margin-left: 24px;
+.title {
+  font-size: 15px;
+  margin: 15px 0;
+  margin-left: 24px;
 }
