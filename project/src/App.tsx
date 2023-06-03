@@ -1,5 +1,8 @@
+import Navbar from "./components/Navbar"
 function App() {
-  return <>zshevcvale?</>;
+  return <>
+  <Navbar></Navbar>
+  </>;
 }
 
 export default App;
