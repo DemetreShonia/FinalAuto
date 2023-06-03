@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from "react";
 interface IconsP {
-    color: string;
-} 
+  color: string;
+}
 
-const Icon: FunctionComponent <IconsP> = ({color}) => {
+const Icon: FunctionComponent<IconsP> = ({ color }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
