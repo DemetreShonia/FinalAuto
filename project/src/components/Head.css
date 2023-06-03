@@ -1,0 +1,42 @@
+.head {
+    position: absolute;
+    width: 1920px;
+    height: 80px;
+    left: 0px;
+    top: 0px;
+    background: #FFFFFF;
+}
+
+.logo {
+    position: absolute;
+    top: 10px;
+    left: 300px;
+    width: 161px;
+    height: 46px;
+    background-color: #FD4100;
+    border-radius: 1.5rem;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.white-co {
+    background-color: white;
+    border-radius: 1.5rem;
+    width: 131.04px;
+    height: 42.04px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.ge-co {
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}

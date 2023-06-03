@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-
+import "./App.module.css";
+import Head from "./components/Head";
 interface Data {
   man_id: number;
   man_name: string;
@@ -26,7 +27,11 @@ function App() {
     }
   };
 
-  return <>zdd</>;
+  return (
+    <>
+      <Head></Head>
+    </>
+  );
 }
 
 export default App;
