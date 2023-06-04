@@ -1,6 +1,6 @@
-import { ProductData } from "../App";
+import { ProductData } from "../../App";
 import ListItem from "./ListItem";
-import "./ListContainer.css";
+import "../Styles/ListContainer.css";
 type Props = {
   productList: ProductData[];
 };

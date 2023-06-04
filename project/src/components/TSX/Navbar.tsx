@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Navbar.css";
+import "../Styles/Navbar.css";
 import Carimage from "./Carimage";
 import Tractorimage from "./Tractorimage";
 import Motoimage from "./Motoimage";
@@ -7,9 +7,8 @@ import DealType from "./DealType";
 import Manufacturer from "./Manufacturer";
 import Category from "./Category";
 
-import { ManData } from "../App";
-import { CatData } from "../App";
-
+import { ManData } from "../../App";
+import { CatData } from "../../App";
 type Props = {
   manData: ManData[];
   catData: CatData[];
@@ -18,6 +17,8 @@ type Props = {
 const Navbar = (props: Props) => {
   const [vehicleType, setVehicleType] = useState<number>(1);
 
+  console.log(props.catData);
+  console.log(props.manData);
   return (
     <div className="navbar">
       <div className="options">

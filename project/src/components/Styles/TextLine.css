@@ -1,0 +1,17 @@
+.text-line {
+    position: fixed;
+    top: 112px;
+    left: 435px;
+}
+
+.page-text {
+    display: flex;
+}
+
+.grey-text {
+    color: #6F7383;
+}
+
+.orange-text {
+    color: #FD4100;
+}

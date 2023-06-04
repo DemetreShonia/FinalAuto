@@ -1,4 +1,4 @@
-.listItem{
+.listItem {
     height: 172px;
     width: 780px;
     background: #FFFFFF;
@@ -6,7 +6,8 @@
     display: flex;
     margin-bottom: 10px;
 }
-.photo{
+
+.photo {
     border-radius: 8px;
     width: 182px;
     height: 144px;
@@ -14,11 +15,11 @@
     margin-bottom: 15px;
     margin-left: 12px;
     margin-right: 0;
-
-
 }
-.info{
-    background-color:#FFFFFF;;
+
+.info {
+    background-color: #FFFFFF;
+    ;
     width: 100%;
     border-radius: 14px;
     margin-top: 16px;
@@ -26,32 +27,36 @@
     position: relative;
 
 }
-.driveIcon{
+
+.driveIcon {
     width: 16px;
     height: 14px;
     align-items: center;
 }
-.sache{
+
+.sache {
     width: 16px;
     height: 16px;
     align-items: center;
 }
-.wheelIc{
+
+.wheelIc {
     width: 16px;
     height: 16px;
     align-items: center;
 }
 
 
-.line1{
+.line1 {
     display: flex;
 }
-.carName{
+
+.carName {
     height: 14px;
     width: 236px;
     left: 0px;
     top: 0px;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -65,15 +70,17 @@
     order: 0;
     flex-grow: 0;
 }
-.year{
-        /* 2013 წ */
+
+.year {
+    /* 2013 წ */
     font-family: 'TBC Sailec';
     font-style: normal;
     font-weight: 500;
-    font-size: 14px;  
+    font-size: 14px;
     color: #8C929B;
 }
-.location{ 
+
+.location {
     font-family: Helvetica;
     font-size: 12px;
     font-weight: 400;
@@ -83,7 +90,8 @@
     margin-left: 10px;
     margin-right: 10px;
 }
-.checked{
+
+.checked {
     /* განბაჟებული */
 
     font-family: 'TBC Sailec';
@@ -100,12 +108,13 @@
     color: #26B753;
 
 }
-.flagIcon{
-   width: 16px;
-   height: 16px;
+
+.flagIcon {
+    width: 16px;
+    height: 16px;
 }
 
-.line2{
+.line2 {
     display: flex;
     font-family: 'TBC Sailec';
     font-style: normal;
@@ -120,7 +129,7 @@
 
 }
 
-.price{
+.price {
     margin-left: auto;
     margin-right: 10px;
     font-family: 'TBC Sailec';
@@ -133,7 +142,8 @@
     margin-bottom: 20px;
     color: #272A37;
 }
-.priceIcon{
+
+.priceIcon {
     height: 24px;
     width: 26px;
     left: 0px;
@@ -143,16 +153,18 @@
     text-align: center;
     margin-left: 4px;
 }
-.carInfo{
+
+.carInfo {
     font-weight: bold;
     display: grid;
     gap: 20px;
     grid-template-columns: auto auto;
 }
-.line3{
+
+.line3 {
     margin-top: 20px;
     display: flex;
-    
+
     font-family: 'Helvetica Neue LT GEO';
     font-style: normal;
     font-weight: 400;
@@ -163,7 +175,8 @@
 
     color: #6F7383;
 }
-.someIcons{
+
+.someIcons {
     margin-left: auto;
     display: flex;
     justify-content: space-evenly;

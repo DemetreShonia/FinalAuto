@@ -1,8 +1,9 @@
 body {
     background: #E5E5E5;
 }
-.content{
-    display: flex;  
+
+.content {
+    display: flex;
     margin-top: 100px;
     justify-content: space-evenly;
 }
