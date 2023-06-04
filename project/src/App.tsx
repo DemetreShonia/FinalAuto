@@ -1,7 +1,7 @@
 import ListItem from "./components/ListItem";
 import Navbar from "./components/Navbar";
 import { useEffect, useState } from "react";
-import "./App.module.css";
+import "./App.css";
 import Head from "./components/Head";
 import ListContainer from "./components/ListContainer";
 
@@ -88,13 +88,14 @@ function App() {
     }
   };
 
-  // const img = `https://static.my.ge/myauto/photos/${product.photo}/thumbs/${product.product_id}_1.jpg?v=${product.photo_ver}`;
 
   return (
     <>
-      <Head></Head>
+    <Head></Head>
+    <div className="content">
       <Navbar></Navbar>
       <ListContainer productList={productList} />
+    </div>
     </>
   );
 }
