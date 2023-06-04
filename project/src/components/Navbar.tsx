@@ -7,7 +7,15 @@ import DealType from "./DealType";
 import Manufacturer from "./Manufacturer";
 import Category from "./Category";
 
-const Navbar: React.FC = () => {
+import { ManData } from "../App";
+import { CatData } from "../App";
+
+type Props = {
+  manData: ManData[];
+  catData: CatData[];
+};
+
+const Navbar = (props: Props) => {
   const [vehicleType, setVehicleType] = useState<number>(1);
 
   return (
@@ -56,11 +64,11 @@ const Navbar: React.FC = () => {
         </div>
         <div className="title">მწარმოებელი</div>
         <div className="dropdown">
-          <Manufacturer/>
+          <Manufacturer />
         </div>
         <div className="title">კატეგორია</div>
         <div className="dropdown">
-          < Category />
+          <Category />
         </div>
       </div>
     </div>
