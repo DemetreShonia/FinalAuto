@@ -118,7 +118,7 @@ const DealType: React.FC = () => {
               <div
                 key="ქირავდება"
                 className={
-                  checkboxes.ქირავდება ? 'checkbox checked' : 'checkbox'
+                  checkboxes.ქირავდება ? 'checkbox checked!' : 'checkbox'
                 }
               >
                 ქირავდება
@@ -142,7 +142,7 @@ const DealType: React.FC = () => {
                     </div>
                     <div
                       key={name}
-                      className={checked ? 'checkbox checked' : 'checkbox'}
+                      className={checked ? 'checkbox checked!' : 'checkbox'}
                     >
                       {name}
                     </div>

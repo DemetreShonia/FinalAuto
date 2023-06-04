@@ -96,7 +96,7 @@ const Manufacturer: React.FC<Props> = ({ manData }) => {
                   <div className={checkbox.showModal ? "checker checkered" : "checker"}>
                     <BsCheck />
                   </div>
-                  <div className={checkbox.showModal ? "checkbox checked" : "checkbox"}>
+                  <div className={checkbox.showModal ? "checkbox checked!" : "checkbox"}>
                     {checkbox.item.man_name}
                   </div>
                 </div>
