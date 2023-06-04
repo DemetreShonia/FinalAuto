@@ -1,9 +1,9 @@
-import ListItem from "./components/ListItem";
-import Navbar from "./components/Navbar";
 import { useEffect, useState } from "react";
 import "./App.css";
-import Head from "./components/Head";
-import ListContainer from "./components/ListContainer";
+import TextLine from "./components/TSX/TextLine";
+import ListContainer from "./components/TSX/ListContainer";
+import Head from "./components/TSX/Head";
+import Navbar from "./components/TSX/Navbar";
 
 export interface ProductData {
   car_model: string;
@@ -26,76 +26,103 @@ export interface ProductData {
   right_wheel: boolean;
 }
 
+export interface ManData {
+  man_name: string;
+}
+export interface CatData {
+  title: string;
+}
 function App() {
   const [productList, setProductList] = useState<ProductData[]>([]);
+  const [manList, setManList] = useState<ManData[]>([]);
+  const [catList, setCatList] = useState<CatData[]>([]);
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  const fetchCategories = async () => {
+    const response = await fetch("https://api2.myauto.ge/ka/cats/get");
+    const json = await response.json();
+    const manu: CatData[] = json.data;
+    const filteredManus = manu.map(({ title }) => ({
+      title,
+    }));
+    setCatList(filteredManus);
+  };
+  const fetchManufacturers = async () => {
+    const response = await fetch("https://static.my.ge/myauto/js/mans.json");
+    const json = await response.json();
+    const manu: ManData[] = json;
+    const filteredManus = manu.map(({ man_name }) => ({
+      man_name,
+    }));
+    setManList(filteredManus);
+  };
+  const fetchProductList = async () => {
+    const response = await fetch("https://api2.myauto.ge/ka/products/");
+    const json = await response.json();
+
+    const productList: ProductData[] = json.data.items;
+    const filteredProductList = productList.map(
+      ({
+        for_rent,
+        category_id,
+        model_id,
+        car_model,
+        man_id,
+        photo,
+        photo_ver,
+        prod_year,
+        car_run_km,
+        engine_volume,
+        car_id,
+        customs_passed,
+        drive_type_id,
+        price,
+        pcide_usd,
+        order_date,
+        views,
+        right_wheel,
+      }) => ({
+        for_rent,
+        category_id,
+        model_id,
+        car_model,
+        man_id,
+        photo,
+        photo_ver,
+        prod_year,
+        car_run_km,
+        engine_volume,
+        car_id,
+        customs_passed,
+        drive_type_id,
+        price,
+        pcide_usd,
+        order_date,
+        views,
+        right_wheel,
+      })
+    );
+    setProductList(filteredProductList);
+  };
   const fetchData = async () => {
     try {
-      const response = await fetch("https://api2.myauto.ge/ka/products/");
-      const json = await response.json();
-
-      const productList: ProductData[] = json.data.items;
-      const filteredProductList = productList.map(
-        ({
-          for_rent,
-          category_id,
-          model_id,
-          car_model,
-          man_id,
-          photo,
-          photo_ver,
-          prod_year,
-          car_run_km,
-          engine_volume,
-          car_id,
-          customs_passed,
-          drive_type_id,
-          price,
-          pcide_usd,
-          order_date,
-          views,
-          right_wheel,
-        }) => ({
-          for_rent,
-          category_id,
-          model_id,
-          car_model,
-          man_id,
-          photo,
-          photo_ver,
-          prod_year,
-          car_run_km,
-          engine_volume,
-          car_id,
-          customs_passed,
-          drive_type_id,
-          price,
-          pcide_usd,
-          order_date,
-          views,
-          right_wheel,
-        })
-      );
-      // console.log(json.data.items);
-
-      setProductList(filteredProductList);
+      fetchProductList();
+      fetchManufacturers();
+      fetchCategories();
     } catch (error) {
       console.log("Error fetching data:", error);
     }
   };
 
-
   return (
     <>
-    <Head></Head>
-    <div className="content">
-      <Navbar></Navbar>
+      <Head></Head>
+      <TextLine />
+      <Navbar manData={manList} catData={catList} />
       <ListContainer productList={productList} />
-    </div>
     </>
   );
 }
