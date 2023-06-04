@@ -1,14 +1,10 @@
 .listItem{
     height: 172px;
     width: 780px;
-    left: 0px;
-    top: 0px;
-    border-radius: 14px;
-
-    /* primary/white */
     background: #FFFFFF;
     border-radius: 14px;
     display: flex;
+    margin-bottom: 10px;
 }
 .photo{
     border-radius: 8px;
@@ -24,9 +20,26 @@
 .info{
     background-color:#FFFFFF;;
     width: 100%;
+    border-radius: 14px;
     margin-top: 16px;
     margin-left: 16px;
     position: relative;
+
+}
+.driveIcon{
+    width: 16px;
+    height: 14px;
+    align-items: center;
+}
+.sache{
+    width: 16px;
+    height: 16px;
+    align-items: center;
+}
+.wheelIc{
+    width: 16px;
+    height: 16px;
+    align-items: center;
 }
 
 
@@ -152,4 +165,8 @@
 }
 .someIcons{
     margin-left: auto;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100px;
+    height: 20px;
 }
