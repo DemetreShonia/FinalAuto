@@ -91,9 +91,7 @@ function App() {
 
   return (
     <>
-      <Head></Head>
       <Navbar></Navbar>
-      <ListContainer productList={productList} />
     </>
   );
 }

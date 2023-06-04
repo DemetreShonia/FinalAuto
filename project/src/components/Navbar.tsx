@@ -4,6 +4,8 @@ import Carimage from "./Carimage";
 import Tractorimage from "./Tractorimage";
 import Motoimage from "./Motoimage";
 import DealType from "./DealType";
+import Manufacturer from "./Manufacturer";
+import Category from "./Category";
 
 const Navbar: React.FC = () => {
   const [vehicleType, setVehicleType] = useState<number>(1);
@@ -51,6 +53,14 @@ const Navbar: React.FC = () => {
           <div className="dropdown">
             <DealType />
           </div>
+        </div>
+        <div className="title">მწარმოებელი</div>
+        <div className="dropdown">
+          <Manufacturer/>
+        </div>
+        <div className="title">კატეგორია</div>
+        <div className="dropdown">
+          < Category />
         </div>
       </div>
     </div>
