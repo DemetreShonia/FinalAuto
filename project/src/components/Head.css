@@ -1,16 +1,17 @@
 .head {
-    position: absolute;
+    position: fixed;
     width: 1920px;
     height: 80px;
     left: 0px;
     top: 0px;
     background: #FFFFFF;
+    z-index: 10;
 }
 
 .logo {
     position: absolute;
     top: 10px;
-    left: 300px;
+    left: 435px;
     width: 161px;
     height: 46px;
     background-color: #FD4100;

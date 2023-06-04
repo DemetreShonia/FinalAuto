@@ -1,15 +1,17 @@
 import { ProductData } from "../App";
 import ListItem from "./ListItem";
-
+import "./ListContainer.css";
 type Props = {
   productList: ProductData[];
 };
 const ListContainer = ({ productList }: Props) => {
   return (
     <div className="list-container">
-      {productList.map((item) => (
-        <ListItem item={item} />
-      ))}
+      <div className="list-content">
+        {productList.map((item) => (
+          <ListItem item={item} />
+        ))}
+      </div>
     </div>
   );
 };
