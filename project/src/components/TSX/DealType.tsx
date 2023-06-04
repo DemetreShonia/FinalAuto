@@ -78,13 +78,13 @@ const DealType: React.FC = () => {
   const activeList = getActiveCheckboxStrings();
   return (
     <div className="DealTypeContainer">
-      <div className="Garigeba" onClick={() => setDrop(!drop)}>
-        <div className='Garigeba-t'>{activeList ? activeList : "გარიგების ტიპი"}</div>
+      <div className="DealType" onClick={() => setDrop(!drop)}>
+        <div className='DealType-t'>{activeList ? activeList : "გარიგების ტიპი"}</div>
         <div className={drop ? "arrow rotate" : "arrow"}><IoIosArrowDown /></div>
       </div>
       {drop &&
-        <div className='Garigeba-DropDown'>
-          <div className="Garigeba-options">
+        <div className='DealType-DropDown'>
+          <div className="DealType-options">
             {/* Separate first two checkboxes */}
             <div className="checkboxCover"
               onClick={() =>
@@ -149,7 +149,6 @@ const DealType: React.FC = () => {
                   </div>
                 ))}
             </div>
-
           </div>
           <div className="emptyFilter">
             <div className='emptyFilter-txt' onClick={() => setAllFalse()}>ფილტრის გასუფთავება</div>

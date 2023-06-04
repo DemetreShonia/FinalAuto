@@ -65,12 +65,18 @@ const Navbar = (props: Props) => {
         </div>
         <div className="title">მწარმოებელი</div>
         <div className="dropdown">
-          <Manufacturer />
+          <Manufacturer manData={props.manData}/>
         </div>
         <div className="title">კატეგორია</div>
         <div className="dropdown">
           <Category />
         </div>
+        
+        <div className="title price">ფასი</div>
+            <div className="priceRange">
+              
+            </div>
+            
       </div>
     </div>
   );
