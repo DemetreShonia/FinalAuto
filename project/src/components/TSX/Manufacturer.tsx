@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { BsCheck } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 
@@ -8,46 +8,28 @@ type Props = {
   manData: ManData[];
 };
 
-interface CheckboxState {
-  item: ManData;
-  showModal: boolean;
-}
-
 const Manufacturer: React.FC<Props> = ({ manData }) => {
-  console.log(manData);
   const [drop, setDrop] = useState<boolean>(false);
 
-  const [checkboxes, setCheckboxes] = useState<CheckboxState[]>(() =>
-    manData.map((item) => ({
-      item,
-      showModal: false,
-    }))
-  );
+  const [checkedManData, setCheckedManData] = useState<string[]>([]);
 
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = event.target;
-    setCheckboxes((prevCheckboxes) =>
-      prevCheckboxes.map((checkbox) =>
-        checkbox.item.man_name === name
-          ? { ...checkbox, showModal: checked }
-          : checkbox
-      )
-    );
+  const handleCheckboxChange = (name: string) => {
+    const oldList = checkedManData;
+    if (oldList.includes(name)) {
+      const newList = oldList.filter((item) => item !== name);
+      setCheckedManData(newList);
+    } else {
+      const newList = [...oldList, name];
+      setCheckedManData(newList);
+    }
   };
 
   const setAllFalse = () => {
-    setCheckboxes(
-      manData.map((item) => ({
-        item,
-        showModal: false,
-      }))
-    );
+    setCheckedManData([]);
   };
 
   const getActiveCheckboxStrings = () => {
-    const activeCheckboxes = checkboxes
-      .filter((checkbox) => checkbox.showModal)
-      .map((checkbox) => checkbox.item.man_name);
+    const activeCheckboxes = checkedManData;
     if (activeCheckboxes.length >= 1) {
       let res = activeCheckboxes.join(", ");
       if (res.length > 18) {
@@ -55,13 +37,6 @@ const Manufacturer: React.FC<Props> = ({ manData }) => {
       }
       return res;
     }
-  };
-
-  const getActiveCheckboxes = () => {
-    const activeCheckboxes = checkboxes
-      .filter((checkbox) => checkbox.showModal)
-      .map((checkbox) => checkbox.item.man_name);
-    return activeCheckboxes;
   };
 
   const activeList = getActiveCheckboxStrings();
@@ -80,29 +55,37 @@ const Manufacturer: React.FC<Props> = ({ manData }) => {
         <div className="Manufacture-DropDown">
           <div className="Manufacture-Options">
             <div className="checkbox-container">
-            <div className="checkboxes">
-            {checkboxes
-              .slice(2)
-              .map((checkbox) => (
-                <div
-                  className="checkboxCover"
-                  onClick={() =>
-                    handleCheckboxChange({
-                      target: { name: checkbox.item.man_name, checked: !checkbox.showModal },
-                    } as ChangeEvent<HTMLInputElement>)
-                  }
-                  key={checkbox.item.man_name}
-                >
-                  <div className={checkbox.showModal ? "checker checkered" : "checker"}>
-                    <BsCheck />
-                  </div>
-                  <div className={checkbox.showModal ? "checkbox checked!" : "checkbox"}>
-                    {checkbox.item.man_name}
-                  </div>
-                </div>
-                
-              ))}
-            </div>
+              <div className="checkboxes">
+                {manData &&
+                  manData.slice(2).map((checkbox) => (
+                    <div
+                      className="checkboxCover"
+                      onClick={() => {
+                        handleCheckboxChange(checkbox.man_name);
+                      }}
+                      key={checkbox.man_name}
+                    >
+                      <div
+                        className={
+                          checkedManData.includes(checkbox.man_name)
+                            ? "checker checkedd"
+                            : "checker"
+                        }
+                      >
+                        <BsCheck />
+                      </div>
+                      <div
+                        className={
+                          checkedManData.includes(checkbox.man_name)
+                            ? "checkbox"
+                            : "checkbox"
+                        }
+                      >
+                        {checkbox.man_name}
+                      </div>
+                    </div>
+                  ))}
+              </div>
             </div>
             <div className="emptyFilter">
               <div className="emptyFilter-txt" onClick={() => setAllFalse()}>

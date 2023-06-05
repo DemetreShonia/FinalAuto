@@ -53,10 +53,13 @@ function App() {
   const fetchManufacturers = async () => {
     const response = await fetch("https://static.my.ge/myauto/js/mans.json");
     const json = await response.json();
+    console.log(json, "Json Man");
     const manu: ManData[] = json;
+    console.log(manu);
     const filteredManus = manu.map(({ man_name }) => ({
       man_name,
     }));
+    console.log(filteredManus);
     setManList(filteredManus);
   };
   const fetchProductList = async () => {

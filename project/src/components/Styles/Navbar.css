@@ -49,7 +49,7 @@
   background-color: white;
 }
 
-.ManufacturerContainer{
+.ManufacturerContainer {
   background-color: white;
 }
 
@@ -65,7 +65,7 @@
   cursor: pointer;
 }
 
-.Manufacture{
+.Manufacture {
   width: 202px;
   height: 40px;
   display: flex;
@@ -128,23 +128,23 @@
   padding-bottom: 10px;
 }
 
-.checkboxes{
+.checkboxes {
   border: 1px solid #e2e5eb;
   border-radius: 5px;
   margin: 10px;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding:5px;
-  
+  padding: 5px;
+
   width: 202px;
   height: 120px;
   overflow-y: auto;
   overflow-x: hidden;
-  text-align:justify;
+  text-align: justify;
 }
 
-.checkbox-container{
+.checkbox-container {
   margin-left: 11px;
 }
 
@@ -162,7 +162,7 @@
   cursor: pointer;
 }
 
-.checkered {
+.checkedd {
   background-color: #fd4100;
 }
 
