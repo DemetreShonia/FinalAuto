@@ -6,6 +6,13 @@
     display: flex;
     margin-bottom: 10px;
 }
+.listItem:hover{
+    background-color:hsl(160, 52%, 94%);
+
+}
+.listItem:hover .info{
+    background-color:hsl(160, 52%, 94%);
+}
 
 .photo {
     border-radius: 8px;
@@ -32,18 +39,26 @@
     width: 16px;
     height: 14px;
     align-items: center;
+    margin-right: 10PX;
+
+}
+.motorIcon{
+    margin-right: 10PX;
 }
 
 .sache {
     width: 16px;
     height: 16px;
     align-items: center;
+    margin-right: 10PX;
+
 }
 
 .wheelIc {
     width: 16px;
     height: 16px;
     align-items: center;
+    margin-right: 10PX;
 }
 
 

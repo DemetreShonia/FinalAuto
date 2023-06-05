@@ -121,8 +121,11 @@ function App() {
     <>
       <Head></Head>
       <TextLine />
-      <Navbar manData={manList} catData={catList} />
-      <ListContainer productList={productList} />
+      <div className="content">
+        <Navbar manData={manList} catData={catList} />
+        <ListContainer productList={productList} />
+      </div>
+      
     </>
   );
 }
