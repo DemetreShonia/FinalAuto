@@ -6,6 +6,7 @@ import driveType from "../Icons/avtomatica.png";
 import heartShape from "../Icons/heartShape.png";
 import pencilIcon from "../Icons/pencilIcon.png";
 import carIcon from "../Icons/carShape.png";
+import doneIcon from "../Icons/done-path.png"
 import "../Styles/ListItem.css";
 
 import { ProductData } from "../../App";
@@ -41,7 +42,7 @@ const ListItem = ({ item }: Props) => {
         <div className="line1">
           <div className="carName">LAND ROVER Range Rover Evoque</div>
           <div className="year">{item.prod_year}</div>
-          <div className="checked"> განბაჟებული</div>
+          <div className="checked"> <img src={doneIcon} alt="" /> განბაჟებული</div>
           <img src={flagIcon} className="flagIcon" />
           <div className="location"> მდებარეობა </div>
         </div>
