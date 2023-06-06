@@ -1,8 +1,8 @@
-.filterCategoty{
+.TimeFilterCategoty{
     background-color: rgb(255, 255, 255);
     border: 1px solid #E9E9F0;
     height: 40px;
-    width: 160px;
+    width: 140px;
     left: 468px;
     top: 0px;
     border-radius: 8px;
@@ -12,13 +12,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: auto;
 }
 .filterCategoty:hover{
     background-color:#fdfdffd6  
 }
-.filter-item-container{
+.TimeFilter-item-container{
+    width: 140px;
     position: absolute;
-    left: 1060px;
+    left: 885px;
     top: 190px;
     z-index: 10;
     border: 1px solid #E2E5EB;
@@ -39,12 +41,12 @@
     background-color: aliceblue;
 }
 
-  .arrow {
+.arrow {
     display: flex;
     align-items: center;
     transition: transform 0.3s ease;
-  }
-  
-  .arrow.rotate {
+}
+
+.arrow.rotate {
     transform: rotate(180deg);
-  }
+}
