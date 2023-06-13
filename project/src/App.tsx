@@ -38,7 +38,7 @@ function App() {
   const [productList, setProductList] = useState<ProductData[]>([]);
   const [manList, setManList] = useState<ManData[]>([]);
   const [catList, setCatList] = useState<CatData[]>([]);
-  const [isResponsive, setIsResponsive] = useState(window.outerWidth <= 700);
+  const [isResponsive, setIsResponsive] = useState(window.outerWidth <= 550);
 
   useEffect(() => {
     fetchData();

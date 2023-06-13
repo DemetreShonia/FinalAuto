@@ -37,7 +37,7 @@ const ResponsiveListItem = ({ item }: Props) => {
       <div className="Rline2">
         <div className="price">
         <div className="priceVal">
-              {" "} {Math.round(item.price / 1000) + "," + (item.price % 1000)}{" "}
+              {" "} {item.price >= 1000 ? Math.round(item.price/1000) + ","+  item.price.toString().slice(-3) : item.price  }
         </div>{" "}
         <div className="priceIcon">₾</div>
         <div className="checked"> <img src={doneIcon} alt="" /> განბაჟებული</div></div>
