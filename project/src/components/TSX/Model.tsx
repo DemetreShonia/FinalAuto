@@ -3,19 +3,21 @@ import { BsCheck } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 
 interface CheckboxState {
-  კატეგორია1: boolean;
-  კატეგორია2: boolean;
-  კატეგორია3: boolean;
-  კატეგორია4: boolean;
+  მოდელი1: boolean;
+  მოდელი2: boolean;
+  მოდელი3: boolean;
+  მოდელი4: boolean;
+  მოდელი5: boolean;
 }
 
-const Category: React.FC = () => {
+const Model: React.FC = () => {
   const [drop, setDrop] = useState<boolean>(false);
   const [checkboxes, setCheckboxes] = useState<CheckboxState>({
-    კატეგორია1: false,
-    კატეგორია2: false,
-    კატეგორია3: false,
-    კატეგორია4: false,
+    მოდელი1: false,
+    მოდელი2: false,
+    მოდელი3: false,
+    მოდელი4: false,
+    მოდელი5: false,
   });
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -25,10 +27,11 @@ const Category: React.FC = () => {
 
   const setAllFalse = () => {
     setCheckboxes({
-      კატეგორია1: false,
-      კატეგორია2: false,
-      კატეგორია3: false,
-      კატეგორია4: false,
+      მოდელი1: false,
+      მოდელი2: false,
+      მოდელი3: false,
+      მოდელი4: false,
+      მოდელი5: false,
     });
   };
 
@@ -45,6 +48,7 @@ const Category: React.FC = () => {
       }
       return res;
     }
+    return "";
   };
 
   const getActiveCheckboxes = () => {
@@ -56,11 +60,9 @@ const Category: React.FC = () => {
   const activeList = getActiveCheckboxStrings();
 
   return (
-    <div className="CategoryContainer">
-      <div className="Category" onClick={() => setDrop(!drop)}>
-        <div className="Category-t">
-          {activeList ? activeList : "კატეგორია"}
-        </div>
+    <div className="ModelContainer">
+      <div className="Model" onClick={() => setDrop(!drop)}>
+        <div className="Model-t">{activeList ? activeList : "მოდელი"}</div>
         <div className={drop ? "arrow rotate" : "arrow"}>
           <IoIosArrowDown />
         </div>
@@ -71,7 +73,7 @@ const Category: React.FC = () => {
             <div className="checkbox-container">
               <div className="Modelcheckboxes">
                 {Object.entries(checkboxes).map(([name, checked]) => (
-                  <div className="checkboxCover">
+                  <div className="checkboxCover" key={name}>
                     <div
                       className={checked ? "checker checkedd" : "checker"}
                       onClick={() =>
@@ -82,10 +84,7 @@ const Category: React.FC = () => {
                     >
                       <BsCheck />
                     </div>
-                    <div
-                      key={name}
-                      className={checked ? "checkbox checked!" : "checkbox"}
-                    >
+                    <div className={checked ? "checkbox checked!" : "checkbox"}>
                       {name}
                     </div>
                   </div>
@@ -107,4 +106,4 @@ const Category: React.FC = () => {
   );
 };
 
-export default Category;
+export default Model;

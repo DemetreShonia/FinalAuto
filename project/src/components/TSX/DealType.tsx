@@ -1,6 +1,6 @@
-import React, { ChangeEvent, useState } from 'react';
-import { BsCheck } from 'react-icons/bs'
-import { IoIosArrowDown } from 'react-icons/io'
+import React, { ChangeEvent, useState } from "react";
+import { BsCheck } from "react-icons/bs";
+import { IoIosArrowDown } from "react-icons/io";
 interface CheckboxState {
   იყიდება: boolean;
   ქირავდება: boolean;
@@ -11,7 +11,7 @@ interface CheckboxState {
 }
 
 const DealType: React.FC = () => {
-  const [drop, setDrop] = useState<boolean>(false)
+  const [drop, setDrop] = useState<boolean>(false);
   const [checkboxes, setCheckboxes] = useState<CheckboxState>({
     იყიდება: false,
     ქირავდება: false,
@@ -23,7 +23,7 @@ const DealType: React.FC = () => {
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
-    if (name === 'ქირავდება' && !checked) {
+    if (name === "ქირავდება" && !checked) {
       setCheckboxes({
         ...checkboxes,
         [name]: checked,
@@ -32,11 +32,16 @@ const DealType: React.FC = () => {
         შესყიდვით: false,
         დაზღვეული: false,
       });
-    }
-    else if ((name === 'დღიურად' || name === 'მძღოლით' || name === 'შესყიდვით' || name === 'შესყიდვით' || name === 'დაზღვეული') && checked) {
-      setCheckboxes({ ...checkboxes, [name]: checked, ['ქირავდება']: checked });
-    }
-    else {
+    } else if (
+      (name === "დღიურად" ||
+        name === "მძღოლით" ||
+        name === "შესყიდვით" ||
+        name === "შესყიდვით" ||
+        name === "დაზღვეული") &&
+      checked
+    ) {
+      setCheckboxes({ ...checkboxes, [name]: checked, ["ქირავდება"]: checked });
+    } else {
       setCheckboxes({ ...checkboxes, [name]: checked });
     }
   };
@@ -59,10 +64,10 @@ const DealType: React.FC = () => {
       .map(([name]) => name);
     // make string out of activeCheckboxes
     if (activeCheckboxes.length >= 1) {
-      let res = activeCheckboxes.join(', ');
+      let res = activeCheckboxes.join(", ");
       // if res is too long, cut it and add '...'
       if (res.length > 18) {
-        res = res.slice(0, 18) + '...';
+        res = res.slice(0, 18) + "...";
       }
       return res;
     }
@@ -73,52 +78,64 @@ const DealType: React.FC = () => {
       .filter(([name, checked]) => checked)
       .map(([name]) => name);
     return activeCheckboxes;
-  }
+  };
 
   const activeList = getActiveCheckboxStrings();
   return (
     <div className="DealTypeContainer">
-      <div className="Garigeba" onClick={() => setDrop(!drop)}>
-        <div className='Garigeba-t'>{activeList ? activeList : "გარიგების ტიპი"}</div>
-        <div className={drop ? "arrow rotate" : "arrow"}><IoIosArrowDown /></div>
+      <div className="DealType" onClick={() => setDrop(!drop)}>
+        <div className="DealType-t">
+          {activeList ? activeList : "გარიგების ტიპი"}
+        </div>
+        <div className={drop ? "arrow rotate" : "arrow"}>
+          <IoIosArrowDown />
+        </div>
       </div>
-      {drop &&
-        <div className='Garigeba-DropDown'>
-          <div className="Garigeba-options">
+      {drop && (
+        <div className="DropDown">
+          <div className="options">
             {/* Separate first two checkboxes */}
-            <div className="checkboxCover"
+            <div
+              className="checkboxCover"
               onClick={() =>
                 handleCheckboxChange({
-                  target: { name: 'იყიდება', checked: !checkboxes.იყიდება },
+                  target: { name: "იყიდება", checked: !checkboxes.იყიდება },
                 } as ChangeEvent<HTMLInputElement>)
-              }>
+              }
+            >
               <div
-                className={checkboxes.იყიდება ? 'checker checkered' : 'checker'}
+                className={checkboxes.იყიდება ? "checker checkedd" : "checker"}
               >
                 <BsCheck />
               </div>
               <div
                 key="იყიდება"
                 className={
-                  checkboxes.იყიდება ? 'checkbox checked' : 'checkbox'
+                  checkboxes.იყიდება ? "checkbox checked!" : "checkbox"
                 }
               >
                 იყიდება
               </div>
             </div>
-            <div className="checkboxCover"
+            <div
+              className="checkboxCover"
               onClick={() =>
                 handleCheckboxChange({
-                  target: { name: 'ქირავდება', checked: !checkboxes.ქირავდება },
+                  target: { name: "ქირავდება", checked: !checkboxes.ქირავდება },
                 } as ChangeEvent<HTMLInputElement>)
-              }>
+              }
+            >
               <div
-                className={checkboxes.ქირავდება ? 'checker checkered' : 'checker'}
-              ><BsCheck /></div>
+                className={
+                  checkboxes.ქირავდება ? "checker checkedd" : "checker"
+                }
+              >
+                <BsCheck />
+              </div>
               <div
                 key="ქირავდება"
                 className={
-                  checkboxes.ქირავდება ? 'checkbox checked' : 'checkbox'
+                  checkboxes.ქირავდება ? "checkbox checked!" : "checkbox"
                 }
               >
                 ქირავდება
@@ -129,35 +146,37 @@ const DealType: React.FC = () => {
               {Object.entries(checkboxes)
                 .slice(2)
                 .map(([name, checked]) => (
-                  <div className="checkboxCover"
+                  <div
+                    className="checkboxCover"
                     onClick={() =>
                       handleCheckboxChange({
                         target: { name, checked: !checked },
                       } as ChangeEvent<HTMLInputElement>)
-                    }>
-                    <div
-                      className={checked ? 'checker checkered' : 'checker'}
-                    >
+                    }
+                  >
+                    <div className={checked ? "checker checkedd" : "checker"}>
                       <BsCheck />
                     </div>
                     <div
                       key={name}
-                      className={checked ? 'checkbox checked' : 'checkbox'}
+                      className={checked ? "checkbox checked!" : "checkbox"}
                     >
                       {name}
                     </div>
                   </div>
                 ))}
             </div>
-
           </div>
           <div className="emptyFilter">
-            <div className='emptyFilter-txt' onClick={() => setAllFalse()}>ფილტრის გასუფთავება</div>
-            <div className="searchBtn" onClick={() => setDrop(false)}>არჩევა</div>
+            <div className="emptyFilter-txt" onClick={() => setAllFalse()}>
+              ფილტრის გასუფთავება
+            </div>
+            <div className="searchBtn" onClick={() => setDrop(false)}>
+              არჩევა
+            </div>
           </div>
         </div>
-      }
-
+      )}
     </div>
   );
 };
