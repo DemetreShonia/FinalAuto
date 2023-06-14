@@ -17,7 +17,23 @@ type Props = {
 
 const Navbar = (props: Props) => {
   const [vehicleType, setVehicleType] = useState<number>(1);
+  const [valuteState, setValuteState] = useState<boolean>(false);
+  const [dropNum, setDropNum] = useState<number>(-1);
+  const [garigebaOpen, setGarigebaOpen] = useState<boolean>(false);
+  const [mwarmoebeliOpen, setMwarmoebeliOpen] = useState<boolean>(false);
+  const [modelOpen, setModelOpen] = useState<boolean>(false);
+  const [categoryOpen, setCategoryOpen] = useState<boolean>(false);
 
+  const resetAllDropStates = () => {
+    setGarigebaOpen(false);
+    setMwarmoebeliOpen(false);
+    setModelOpen(false);
+    setCategoryOpen(false);
+  };
+
+  const valuteHandler = () => {
+    setValuteState((valuteState) => !valuteState);
+  };
   console.log(props.catData);
   console.log(props.manData);
   return (
@@ -60,25 +76,65 @@ const Navbar = (props: Props) => {
       <div className="dropdowns">
         <div className="title">გარიგების ტიპი</div>
         <div className="deal_type">
-          <div className="dropdown">
-            <DealType />
+          <div className="dropdown" onClick={() => setDropNum(1)}>
+            <DealType
+              drop={garigebaOpen}
+              setDrop={setGarigebaOpen}
+              resetOthers={resetAllDropStates}
+            />
           </div>
         </div>
         <div className="title">მწარმოებელი</div>
-        <div className="dropdown">
-          <Manufacturer manData={props.manData} />
+        <div className="dropdown" onClick={() => setDropNum(2)}>
+          <Manufacturer
+            manData={props.manData}
+            drop={mwarmoebeliOpen}
+            setDrop={setMwarmoebeliOpen}
+            resetOthers={resetAllDropStates}
+          />
         </div>
         <div className="title">მოდელი</div>
-        <div className="dropdown">
-          <Model />
+        <div className="dropdown" onClick={() => setDropNum(3)}>
+          <Model
+            drop={modelOpen}
+            setDrop={setModelOpen}
+            resetOthers={resetAllDropStates}
+          />
         </div>
         <div className="title">კატეგორია</div>
-        <div className="dropdown">
-          <Category />
+        <div className="dropdown" onClick={() => setDropNum(4)}>
+          <Category
+            drop={categoryOpen}
+            setDrop={setCategoryOpen}
+            resetOthers={resetAllDropStates}
+          />
         </div>
-
-        <div className="title price">ფასი</div>
-        <div className="priceRange"></div>
+        <div className="priceInSearch">
+          <div className="pricePart">
+            <div className="pricePartTitle">ფასი</div>
+            <div className="priceSign" onClick={() => valuteHandler()}>
+              <div
+                className={
+                  valuteState ? "priceSignElem signActive" : "priceSignElem"
+                }
+              >
+                ₾
+              </div>
+              <div
+                className={
+                  valuteState ? "priceSignElem " : "priceSignElem signActive"
+                }
+              >
+                $
+              </div>
+            </div>
+          </div>
+          <div className="priceRange">
+            <input type="text" className="range" placeholder="დან"></input>-
+            <input type="text" className="range" placeholder="მდე"></input>
+          </div>
+        </div>
+        <button className="search-btn">ძებნა</button>
       </div>
     </div>
   );

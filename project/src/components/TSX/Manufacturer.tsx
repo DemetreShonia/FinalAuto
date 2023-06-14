@@ -6,10 +6,18 @@ import { ManData } from "../../App";
 
 type Props = {
   manData: ManData[];
+  drop: boolean;
+  setDrop: React.Dispatch<React.SetStateAction<boolean>>;
+  resetOthers: () => void;
 };
 
-const Manufacturer: React.FC<Props> = ({ manData }) => {
-  const [drop, setDrop] = useState<boolean>(false);
+const Manufacturer: React.FC<Props> = ({
+  manData,
+  drop,
+  setDrop,
+  resetOthers,
+}) => {
+  // const [drop, setDrop] = useState<boolean>(false);
 
   const [checkedManData, setCheckedManData] = useState<string[]>([]);
 
@@ -43,7 +51,13 @@ const Manufacturer: React.FC<Props> = ({ manData }) => {
 
   return (
     <div className="ManufacturerContainer">
-      <div className="Manufacture" onClick={() => setDrop(!drop)}>
+      <div
+        className="Manufacture"
+        onClick={() => {
+          resetOthers();
+          setDrop(!drop);
+        }}
+      >
         <div className="Manufacturer">
           {activeList ? activeList : "მწარმოებელი"}
         </div>

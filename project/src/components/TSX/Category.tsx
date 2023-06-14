@@ -9,8 +9,14 @@ interface CheckboxState {
   კატეგორია4: boolean;
 }
 
-const Category: React.FC = () => {
-  const [drop, setDrop] = useState<boolean>(false);
+type Props = {
+  drop: boolean;
+  setDrop: React.Dispatch<React.SetStateAction<boolean>>;
+  resetOthers: () => void;
+};
+
+const Category: React.FC<Props> = ({ drop, setDrop, resetOthers }) => {
+  // const [drop, setDrop] = useState<boolean>(false);
   const [checkboxes, setCheckboxes] = useState<CheckboxState>({
     კატეგორია1: false,
     კატეგორია2: false,
@@ -57,7 +63,13 @@ const Category: React.FC = () => {
 
   return (
     <div className="CategoryContainer">
-      <div className="Category" onClick={() => setDrop(!drop)}>
+      <div
+        className="Category"
+        onClick={() => {
+          resetOthers();
+          setDrop(!drop);
+        }}
+      >
         <div className="Category-t">
           {activeList ? activeList : "კატეგორია"}
         </div>

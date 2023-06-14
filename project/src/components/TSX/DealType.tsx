@@ -9,9 +9,13 @@ interface CheckboxState {
   შესყიდვით: boolean;
   დაზღვეული: boolean;
 }
-
-const DealType: React.FC = () => {
-  const [drop, setDrop] = useState<boolean>(false);
+interface props {
+  drop: boolean;
+  setDrop: React.Dispatch<React.SetStateAction<boolean>>;
+  resetOthers: () => void;
+}
+const DealType: React.FC<props> = ({ drop, setDrop, resetOthers }) => {
+  // const [drop, setDrop] = useState<boolean>(false);
   const [checkboxes, setCheckboxes] = useState<CheckboxState>({
     იყიდება: false,
     ქირავდება: false,
@@ -83,7 +87,13 @@ const DealType: React.FC = () => {
   const activeList = getActiveCheckboxStrings();
   return (
     <div className="DealTypeContainer">
-      <div className="DealType" onClick={() => setDrop(!drop)}>
+      <div
+        className="DealType"
+        onClick={() => {
+          resetOthers();
+          setDrop(!drop);
+        }}
+      >
         <div className="DealType-t">
           {activeList ? activeList : "გარიგების ტიპი"}
         </div>

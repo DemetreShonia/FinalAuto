@@ -10,8 +10,14 @@ interface CheckboxState {
   მოდელი5: boolean;
 }
 
-const Model: React.FC = () => {
-  const [drop, setDrop] = useState<boolean>(false);
+type Props = {
+  drop: boolean;
+  setDrop: React.Dispatch<React.SetStateAction<boolean>>;
+  resetOthers: () => void;
+};
+
+const Model: React.FC<Props> = ({ drop, setDrop, resetOthers }) => {
+  //   const [drop, setDrop] = useState<boolean>(false);
   const [checkboxes, setCheckboxes] = useState<CheckboxState>({
     მოდელი1: false,
     მოდელი2: false,
@@ -61,7 +67,13 @@ const Model: React.FC = () => {
 
   return (
     <div className="ModelContainer">
-      <div className="Model" onClick={() => setDrop(!drop)}>
+      <div
+        className="Model"
+        onClick={() => {
+          resetOthers();
+          setDrop(!drop);
+        }}
+      >
         <div className="Model-t">{activeList ? activeList : "მოდელი"}</div>
         <div className={drop ? "arrow rotate" : "arrow"}>
           <IoIosArrowDown />
