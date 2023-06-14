@@ -1,11 +1,9 @@
 import "../Styles/Head.css";
+import myAutoLogo from "../Icons/Layer 2.png"
 const Head = () => {
   return (
     <div className="head">
-      <div className="logo">
-        <div className="white-co">myauto</div>
-        <div className="ge-co">.ge</div>
-      </div>
+      <img src={myAutoLogo} className="logo" />
     </div>
   );
 };

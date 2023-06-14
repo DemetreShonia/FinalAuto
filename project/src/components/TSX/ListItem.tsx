@@ -3,9 +3,10 @@ import motorIcon from "../Icons/motorIcon.png";
 import wheel from "../Icons/wheel.png";
 import steeringWheel from "../Icons/sache.png";
 import driveType from "../Icons/avtomatica.png";
-import heartShape from "../Icons/heartShape.png";
-import pencilIcon from "../Icons/pencilIcon.png";
-import carIcon from "../Icons/carShape.png";
+import heartShape from "../Icons/favorite.png";
+import pencilIcon from "../Icons/note.png";
+import carIcon from "../Icons/shedareba.png";
+import doneIcon from "../Icons/done-path.png"
 import "../Styles/ListItem.css";
 
 import { ProductData } from "../../App";
@@ -24,8 +25,8 @@ const ListItem = ({ item }: Props) => {
 
     const timePassed = currentDate.getTime() - providedDate.getTime();
 
-    const hoursPassed = Math.floor(timePassed / (1000 * 60 * 60));
-    const daysPassed = Math.floor(timePassed / (1000 * 60 * 60 * 24));
+    const hoursPassed = Math.floor(timePassed );
+    const daysPassed = Math.floor(timePassed % 365 );
     const yearsPassed = currentDate.getFullYear() - providedDate.getFullYear();
 
     return { hours: hoursPassed, days: daysPassed, years: yearsPassed };
@@ -41,7 +42,7 @@ const ListItem = ({ item }: Props) => {
         <div className="line1">
           <div className="carName">LAND ROVER Range Rover Evoque</div>
           <div className="year">{item.prod_year}</div>
-          <div className="checked"> განბაჟებული</div>
+          <div className="checked"> <img src={doneIcon} alt="" /> განბაჟებული</div>
           <img src={flagIcon} className="flagIcon" />
           <div className="location"> მდებარეობა </div>
         </div>
@@ -70,16 +71,16 @@ const ListItem = ({ item }: Props) => {
             {" "}
             <div className="priceVal">
               {" "}
-              {Math.round(item.price / 1000) + "," + (item.price % 1000)}{" "}
+              {item.price >= 1000 ? Math.round(item.price/1000) + ","+  item.price.toString().slice(-3) : item.price }{" "}
             </div>{" "}
             <div className="priceIcon">₾</div>
           </div>
         </div>
         <div className="line3">
-          <div className="view"> {item.views}</div>
+          <div className="view"> {item.views}  ნახვა </div>
           <div className="uploadDate">
             {" "}
-            {`   ${calculateTimePassed(item.order_date).years}`}
+            {calculateTimePassed(item.order_date).years <=0 ?  `  ' ${calculateTimePassed(item.order_date).days}` : " "}
           </div>
           <div className="someIcons">
             {" "}
