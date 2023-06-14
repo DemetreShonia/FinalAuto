@@ -53,6 +53,14 @@
   background-color: white;
 }
 
+.ModelContainer {
+  background-color: white;
+}
+
+.CategoryContainer {
+  background-color: white;
+}
+
 .DealType {
   width: 202px;
   height: 40px;
@@ -66,6 +74,29 @@
 }
 
 .Manufacture {
+  width: 202px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid #e2e5eb;
+  border-radius: 5px;
+  margin: auto;
+  cursor: pointer;
+}
+
+.Model {
+  width: 202px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid #e2e5eb;
+  border-radius: 5px;
+  margin: auto;
+  cursor: pointer;
+}
+.Category {
   width: 202px;
   height: 40px;
   display: flex;
@@ -134,6 +165,22 @@
   overflow-y: auto;
   overflow-x: hidden;
   text-align: justify;
+}
+
+.Modelcheckboxes {
+  border: 1px solid #e2e5eb;
+  border-radius: 5px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-align: justify;
+}
+
+.Modeloptions {
 }
 
 .checkbox-container {
