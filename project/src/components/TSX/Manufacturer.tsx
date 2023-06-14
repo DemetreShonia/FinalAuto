@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BsCheck } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 
@@ -52,8 +52,8 @@ const Manufacturer: React.FC<Props> = ({ manData }) => {
         </div>
       </div>
       {drop && (
-        <div className="Manufacture-DropDown">
-          <div className="Manufacture-Options">
+        <div className="DropDown">
+          <div className="Options">
             <div className="checkbox-container">
               <div className="checkboxes">
                 {manData &&

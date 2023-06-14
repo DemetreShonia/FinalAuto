@@ -6,6 +6,7 @@ import Motoimage from "./Motoimage";
 import DealType from "./DealType";
 import Manufacturer from "./Manufacturer";
 import Category from "./Category";
+import Model from "./Model";
 
 import { ManData } from "../../App";
 import { CatData } from "../../App";
@@ -21,7 +22,7 @@ const Navbar = (props: Props) => {
   console.log(props.manData);
   return (
     <div className="navbar">
-      <div className="options">
+      <div className="navbar-options">
         <button
           type="submit"
           className={vehicleType === 1 ? "btn left chosen" : "btn left"}
@@ -65,18 +66,19 @@ const Navbar = (props: Props) => {
         </div>
         <div className="title">მწარმოებელი</div>
         <div className="dropdown">
-          <Manufacturer manData={props.manData}/>
+          <Manufacturer manData={props.manData} />
+        </div>
+        <div className="title">მოდელი</div>
+        <div className="dropdown">
+          <Model />
         </div>
         <div className="title">კატეგორია</div>
         <div className="dropdown">
           <Category />
         </div>
-        
+
         <div className="title price">ფასი</div>
-            <div className="priceRange">
-              
-            </div>
-            
+        <div className="priceRange"></div>
       </div>
     </div>
   );

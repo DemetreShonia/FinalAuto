@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { BsCheck } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 
-const Category: React.FC = () => {
+const Model: React.FC = () => {
   const [drop, setDrop] = useState<boolean>(false);
 
   return (
-    <div className="CategoryContainer">
-      <div className="Category" onClick={() => setDrop(!drop)}>
-        <div className="Category-t"> კატეგორია </div>
+    <div className="ModelContainer">
+      <div className="Model" onClick={() => setDrop(!drop)}>
+        <div className="Model-t"> მოდელი </div>
         <div className={drop ? "arrow rotate" : "arrow"}>
           <IoIosArrowDown />
         </div>
@@ -38,4 +38,4 @@ const Category: React.FC = () => {
   );
 };
 
-export default Category;
+export default Model;

@@ -10,7 +10,7 @@
   z-index: 10;
 }
 
-.options {
+.navbar-options {
   display: flex;
   justify-content: space-around;
 }
@@ -92,20 +92,12 @@
   cursor: pointer;
 }
 
-.DealType-options {
-  width: 202px;
-  margin: auto;
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 12px 8px 12px 12px;
-  box-sizing: border-box;
-  border: 1px solid #e2e5eb;
-  border-bottom: none;
+.DropDown {
+  position: absolute;
+  background-color: white;
 }
 
-.Manufacture-options {
+.options {
   width: 202px;
   margin: auto;
   margin-top: 10px;
