@@ -5,6 +5,7 @@ import "../Styles/ListContainer.css";
 import Filter from "./Filter";
 import TimeFilter from "./TimeFilter";
 import ResponsiveListItem from "./ResponsiveListItem";
+import arrow from "../Icons/arrow  down.png"
 
 type Props = {
   productList: ProductData[];
@@ -40,6 +41,15 @@ const ListContainer = ({ productList }: Props) => {
             <ListItem item={item} />
           )
         )}
+        <div className="pageBar">
+          <img src={arrow} className="leftArrow"/>
+          <div className="p1"> 1 </div>
+          <div className="p2"> 2 </div>
+          <div className="p3"> 3 </div>
+          <div className="p4"> 4 </div>
+          <div className="p5"> 5 </div>
+          <img  src={arrow} className="rightArrow"  />
+        </div>
       </div>
     </div>
   );

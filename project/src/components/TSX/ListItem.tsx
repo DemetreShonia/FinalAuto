@@ -3,9 +3,9 @@ import motorIcon from "../Icons/motorIcon.png";
 import wheel from "../Icons/wheel.png";
 import steeringWheel from "../Icons/sache.png";
 import driveType from "../Icons/avtomatica.png";
-import heartShape from "../Icons/heartShape.png";
-import pencilIcon from "../Icons/pencilIcon.png";
-import carIcon from "../Icons/carShape.png";
+import heartShape from "../Icons/favorite.png";
+import pencilIcon from "../Icons/note.png";
+import carIcon from "../Icons/shedareba.png";
 import doneIcon from "../Icons/done-path.png"
 import "../Styles/ListItem.css";
 

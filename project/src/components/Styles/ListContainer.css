@@ -25,6 +25,43 @@
     align-items: center;
 }
 
+.pageBar{
+    height: 40px;
+    background-color: white;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    color: rgb(172, 169, 169);
+    font-weight: 1000;
+    font-size: larger;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.rightArrow{
+    margin-right: 30%;
+    transform: rotate(270deg);
+}
+.leftArrow{
+    margin-left: 30%;
+    transform: rotate(90deg);
+}
+.p1:hover{
+    color: orangered;
+}
+.p2:hover{
+    color: orangered;
+}
+.p3:hover{
+    color: orangered;
+}
+.p4:hover{
+    color: orangered;
+}
+.p5:hover{
+    color: orangered;
+}
+
+
 @media (max-width: 700px) {
     .headline{
         display: none;
