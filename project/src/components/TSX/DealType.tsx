@@ -163,8 +163,9 @@ const DealType: React.FC<props> = ({
               {/* Remaining checkboxes */}
               {Object.entries(checkboxes)
                 .slice(2)
-                .map(([name, checked]) => (
+                .map(([name, checked], id) => (
                   <div
+                    key={id}
                     className="checkboxCover"
                     onClick={() => {
                       setForRent(1);
