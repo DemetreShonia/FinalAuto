@@ -1,69 +1,110 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState, useEffect } from "react";
 import { BsCheck } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
-
-interface CheckboxState {
-  მოდელი1: boolean;
-  მოდელი2: boolean;
-  მოდელი3: boolean;
-  მოდელი4: boolean;
-  მოდელი5: boolean;
-}
 
 type Props = {
   drop: boolean;
   setDrop: React.Dispatch<React.SetStateAction<boolean>>;
   resetOthers: () => void;
   setModels: (models: number[]) => void;
+  selectedManuIds: number[];
 };
 
-const Model: React.FC<Props> = ({ drop, setDrop, resetOthers, setModels }) => {
-  //   const [drop, setDrop] = useState<boolean>(false);
-  const [checkboxes, setCheckboxes] = useState<CheckboxState>({
-    მოდელი1: false,
-    მოდელი2: false,
-    მოდელი3: false,
-    მოდელი4: false,
-    მოდელი5: false,
-  });
+interface ModelData {
+  model_id: number;
+  man_id: number;
+  model_name: string;
+  model_group: string;
+  sort_order: number;
+  cat_man_id: number;
+  cat_model_id: number;
+  cat_modif_id: number;
+  is_car: boolean;
+  is_moto: boolean;
+  is_spec: boolean;
+  show_in_salons: number;
+  shown_in_slider: number;
+}
+type FilteredModels = {
+  model_name: string;
+  model_id: number;
+};
 
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = event.target;
-    setCheckboxes({ ...checkboxes, [name]: checked });
-  };
+// is car stuff? not yet...
 
-  const setAllFalse = () => {
-    setCheckboxes({
-      მოდელი1: false,
-      მოდელი2: false,
-      მოდელი3: false,
-      მოდელი4: false,
-      მოდელი5: false,
+const Model: React.FC<Props> = ({
+  drop,
+  setDrop,
+  resetOthers,
+  setModels,
+  selectedManuIds,
+}) => {
+  const [filteredModels, setFilteredModels] = useState<FilteredModels[]>();
+  const [checkedModels, setChosenModels] = useState<string[]>([]);
+  const allModelNames =
+    filteredModels &&
+    filteredModels.map(({ model_name, model_id }) => {
+      return model_name;
     });
+
+  console.log(allModelNames);
+  console.log(filteredModels);
+  const fetchModel = async (man_id: number) => {
+    const response = await fetch(
+      `https://api2.myauto.ge/ka/getManModels?man_id=${man_id}`
+    );
+    const json = await response.json();
+
+    const modelList: ModelData[] = json.data;
+    const filtered = modelList.map(({ model_name, model_id }) => ({
+      model_name,
+      model_id,
+    }));
+    return filtered;
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      for (let i = 0; i < selectedManuIds.length; i++) {
+        const innerModel: FilteredModels[] = await fetchModel(
+          selectedManuIds[i]
+        );
+        setFilteredModels(innerModel);
+        break;
+      }
+    };
+
+    fetchData();
+  }, [selectedManuIds]);
+
+  const handleCheckboxChange = (filterData: FilteredModels) => {
+    const oldList = checkedModels;
+    console.log(checkedModels);
+
+    if (checkedModels && checkedModels.includes(filterData.model_name)) {
+      const newList = oldList
+        ? oldList.filter((item) => item !== filterData.model_name)
+        : checkedModels;
+      setChosenModels(newList);
+    } else {
+      if (oldList) {
+        const newList = [...oldList, filterData.model_name];
+        setChosenModels(newList);
+      }
+    }
   };
 
   const getActiveCheckboxStrings = () => {
-    const activeCheckboxes = Object.entries(checkboxes)
-      .filter(([name, checked]) => checked)
-      .map(([name]) => name);
-    // make string out of activeCheckboxes
-    if (activeCheckboxes.length >= 1) {
-      let res = activeCheckboxes.join(", ");
-      // if res is too long, cut it and add '...'
+    if (!checkedModels) return "მოდელი";
+
+    if (checkedModels.length >= 1) {
+      let res = checkedModels.join(", ");
       if (res.length > 18) {
         res = res.slice(0, 18) + "...";
       }
       return res;
     }
-    return "";
   };
 
-  const getActiveCheckboxes = () => {
-    const activeCheckboxes = Object.entries(checkboxes)
-      .filter(([name, checked]) => checked)
-      .map(([name]) => name);
-    return activeCheckboxes;
-  };
   const activeList = getActiveCheckboxStrings();
 
   return (
@@ -71,8 +112,10 @@ const Model: React.FC<Props> = ({ drop, setDrop, resetOthers, setModels }) => {
       <div
         className="Model"
         onClick={() => {
-          resetOthers();
-          setDrop(!drop);
+          if (filteredModels && filteredModels.length > 0) {
+            resetOthers();
+            setDrop(!drop);
+          }
         }}
       >
         <div className="Model-t">{activeList ? activeList : "მოდელი"}</div>
@@ -85,27 +128,47 @@ const Model: React.FC<Props> = ({ drop, setDrop, resetOthers, setModels }) => {
           <div className="Modeloptions">
             <div className="checkbox-container">
               <div className="Modelcheckboxes">
-                {Object.entries(checkboxes).map(([name, checked]) => (
-                  <div className="checkboxCover" key={name}>
+                {filteredModels &&
+                  filteredModels.map((checkbox) => (
                     <div
-                      className={checked ? "checker checkedd" : "checker"}
-                      onClick={() =>
-                        handleCheckboxChange({
-                          target: { name, checked: !checked },
-                        })
-                      }
+                      className="checkboxCover"
+                      onClick={() => {
+                        console.log(checkbox.model_name);
+                        handleCheckboxChange(checkbox);
+                      }}
+                      key={checkbox.model_name}
                     >
-                      <BsCheck />
+                      <div
+                        className={
+                          checkedModels &&
+                          checkedModels.includes(checkbox.model_name)
+                            ? "checker checkedd"
+                            : "checker"
+                        }
+                      >
+                        <BsCheck />
+                      </div>
+                      <div
+                        className={
+                          checkedModels &&
+                          checkedModels.includes(checkbox.model_name)
+                            ? "checkbox"
+                            : "checkbox"
+                        }
+                      >
+                        {checkbox.model_name}
+                      </div>
                     </div>
-                    <div className={checked ? "checkbox checked!" : "checkbox"}>
-                      {name}
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
             <div className="emptyFilter">
-              <div className="emptyFilter-txt" onClick={() => setAllFalse()}>
+              <div
+                className="emptyFilter-txt"
+                onClick={() => {
+                  /* set all false */
+                }}
+              >
                 ფილტრის გასუფთავება
               </div>
               <div className="searchBtn" onClick={() => setDrop(false)}>

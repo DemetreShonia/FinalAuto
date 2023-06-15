@@ -36,8 +36,6 @@ const Navbar = () => {
   });
 
   const filterManDataByVehicleType = (manData: ManData[], id: number) => {
-    console.log("FILTER MAN DATA ())");
-    console.log(manList);
     switch (id) {
       case 1: // car
         return manData.filter(({ is_car }) => is_car == 1); // not ===
@@ -191,6 +189,7 @@ const Navbar = () => {
         <div className="title">მოდელი</div>
         <div className="dropdown" onClick={() => setDropNum(3)}>
           <Model
+            selectedManuIds={filterInfo.manufacturers}
             setModels={setModels}
             drop={modelOpen}
             setDrop={setModelOpen}
