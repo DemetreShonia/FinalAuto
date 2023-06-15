@@ -28,6 +28,10 @@ export interface ProductData {
 
 export interface ManData {
   man_name: string;
+  man_id: number;
+  is_car: number;
+  is_spec: number;
+  is_moto: number;
 }
 
 export interface CatData {
@@ -68,9 +72,15 @@ function App() {
     const response = await fetch("https://static.my.ge/myauto/js/mans.json");
     const json = await response.json();
     const manu: ManData[] = json;
-    const filteredManus = manu.map(({ man_name }) => ({
-      man_name,
-    }));
+    const filteredManus = manu.map(
+      ({ man_name, man_id, is_car, is_moto, is_spec }) => ({
+        man_name,
+        man_id,
+        is_car,
+        is_moto,
+        is_spec,
+      })
+    );
     setManList(filteredManus);
   };
 

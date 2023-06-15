@@ -36,7 +36,7 @@ const Navbar = (props: Props) => {
     to: -1,
   });
 
-  console.log(filterInfo.forRent);
+  console.log(filterInfo);
   const setForRent = (v: number) => {
     setFilterInfo({ ...filterInfo, forRent: v });
   };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsCheck } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 
@@ -12,6 +12,10 @@ type Props = {
   setManufacturers: (manufacturers: number[]) => void;
 };
 
+type CheckData = {
+  man_name: string;
+  man_id: number;
+};
 const Manufacturer: React.FC<Props> = ({
   manData,
   drop,
@@ -21,15 +25,28 @@ const Manufacturer: React.FC<Props> = ({
 }) => {
   // const [drop, setDrop] = useState<boolean>(false);
 
-  const [checkedManData, setCheckedManData] = useState<string[]>([]);
+  const [checkedManData, setCheckedManData] = useState<CheckData[]>([]);
 
-  const handleCheckboxChange = (name: string) => {
+  const activeCheckboxes = checkedManData.map(({ man_name, man_id }) => {
+    return man_name;
+  });
+
+  useEffect(() => {
+    const manuIds = checkedManData.map(({ man_name, man_id }) => {
+      return +man_id;
+    });
+    setManufacturers(manuIds);
+  }, [checkedManData]);
+
+  const handleCheckboxChange = (checkData: CheckData) => {
     const oldList = checkedManData;
-    if (oldList.includes(name)) {
-      const newList = oldList.filter((item) => item !== name);
+    if (activeCheckboxes.includes(checkData.man_name)) {
+      const newList = oldList.filter(
+        (item) => item.man_name !== checkData.man_name
+      );
       setCheckedManData(newList);
     } else {
-      const newList = [...oldList, name];
+      const newList = [...oldList, checkData];
       setCheckedManData(newList);
     }
   };
@@ -39,7 +56,6 @@ const Manufacturer: React.FC<Props> = ({
   };
 
   const getActiveCheckboxStrings = () => {
-    const activeCheckboxes = checkedManData;
     if (activeCheckboxes.length >= 1) {
       let res = activeCheckboxes.join(", ");
       if (res.length > 18) {
@@ -77,13 +93,16 @@ const Manufacturer: React.FC<Props> = ({
                     <div
                       className="checkboxCover"
                       onClick={() => {
-                        handleCheckboxChange(checkbox.man_name);
+                        handleCheckboxChange({
+                          man_id: checkbox.man_id,
+                          man_name: checkbox.man_name,
+                        });
                       }}
                       key={checkbox.man_name}
                     >
                       <div
                         className={
-                          checkedManData.includes(checkbox.man_name)
+                          activeCheckboxes.includes(checkbox.man_name)
                             ? "checker checkedd"
                             : "checker"
                         }
@@ -92,7 +111,7 @@ const Manufacturer: React.FC<Props> = ({
                       </div>
                       <div
                         className={
-                          checkedManData.includes(checkbox.man_name)
+                          activeCheckboxes.includes(checkbox.man_name)
                             ? "checkbox"
                             : "checkbox"
                         }
