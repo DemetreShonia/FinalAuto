@@ -5,7 +5,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { ManData } from "../../App";
 
 type Props = {
-  manData: ManData[];
+  manData: ManData[] | undefined;
   drop: boolean;
   setDrop: React.Dispatch<React.SetStateAction<boolean>>;
   resetOthers: () => void;

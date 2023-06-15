@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../Styles/Navbar.css";
 import Carimage from "./Carimage";
 import Tractorimage from "./Tractorimage";
@@ -10,10 +10,6 @@ import Model from "./Model";
 
 import { ManData } from "../../App";
 import { CatData } from "../../App";
-type Props = {
-  manData: ManData[];
-  catData: CatData[];
-};
 
 export interface FilterInformation {
   forRent: number;
@@ -25,7 +21,10 @@ export interface FilterInformation {
   to: number;
 }
 
-const Navbar = (props: Props) => {
+const Navbar = () => {
+  const [manList, setManList] = useState<ManData[]>([]);
+  const [catList, setCatList] = useState<CatData[]>([]);
+  const [manDataToUse, setMandataToUse] = useState<ManData[]>();
   const [filterInfo, setFilterInfo] = useState<FilterInformation>({
     forRent: -1,
     manufacturers: [],
@@ -36,16 +35,61 @@ const Navbar = (props: Props) => {
     to: -1,
   });
 
-  console.log(filterInfo);
+  const filterManDataByVehicleType = (manData: ManData[], id: number) => {
+    console.log("FILTER MAN DATA ())");
+    console.log(manList);
+    switch (id) {
+      case 1: // car
+        return manData.filter(({ is_car }) => is_car == 1); // not ===
+      case 2: // moto
+        return manData.filter(({ is_moto }) => is_moto == 1);
+      case 3: // spec
+        return manData.filter(({ is_spec }) => is_spec == 1);
+    }
+  };
+
+  const fetchCategories = async () => {
+    const response = await fetch("https://api2.myauto.ge/ka/cats/get");
+    const json = await response.json();
+    const manu: CatData[] = json.data;
+    const filteredManus = manu.map(({ title }) => ({
+      title,
+    }));
+    setCatList(filteredManus);
+  };
+  const fetchManufacturers = async () => {
+    const response = await fetch("https://static.my.ge/myauto/js/mans.json");
+    const json = await response.json();
+    const manu: ManData[] = json;
+
+    setManList(manu);
+    setMandataToUse(filterManDataByVehicleType(manu, 1));
+  };
+  const fetchData = async () => {
+    try {
+      fetchManufacturers();
+      fetchCategories();
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // console.log(filterInfo);
   const setForRent = (v: number) => {
     setFilterInfo({ ...filterInfo, forRent: v });
   };
   const setManufacturers = (v: number[]) => {
     setFilterInfo({ ...filterInfo, manufacturers: v });
   };
+
   const setVehicleTypeID = (v: number) => {
     // this is here
     setFilterInfo({ ...filterInfo, vehicleType: v });
+    setMandataToUse(filterManDataByVehicleType(manList, v));
   };
 
   const setModels = (v: number[]) => {
@@ -138,7 +182,7 @@ const Navbar = (props: Props) => {
         <div className="dropdown" onClick={() => setDropNum(2)}>
           <Manufacturer
             setManufacturers={setManufacturers}
-            manData={props.manData}
+            manData={manDataToUse}
             drop={mwarmoebeliOpen}
             setDrop={setMwarmoebeliOpen}
             resetOthers={resetAllDropStates}

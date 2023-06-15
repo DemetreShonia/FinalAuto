@@ -40,12 +40,10 @@ export interface CatData {
 
 function App() {
   const [productList, setProductList] = useState<ProductData[]>([]);
-  const [manList, setManList] = useState<ManData[]>([]);
-  const [catList, setCatList] = useState<CatData[]>([]);
   const [isResponsive, setIsResponsive] = useState(window.outerWidth <= 550);
 
   useEffect(() => {
-    fetchData();
+    fetchProductList();
 
     const handleResize = () => {
       setIsResponsive(window.outerWidth <= 700);
@@ -57,32 +55,6 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  const fetchCategories = async () => {
-    const response = await fetch("https://api2.myauto.ge/ka/cats/get");
-    const json = await response.json();
-    const manu: CatData[] = json.data;
-    const filteredManus = manu.map(({ title }) => ({
-      title,
-    }));
-    setCatList(filteredManus);
-  };
-
-  const fetchManufacturers = async () => {
-    const response = await fetch("https://static.my.ge/myauto/js/mans.json");
-    const json = await response.json();
-    const manu: ManData[] = json;
-    const filteredManus = manu.map(
-      ({ man_name, man_id, is_car, is_moto, is_spec }) => ({
-        man_name,
-        man_id,
-        is_car,
-        is_moto,
-        is_spec,
-      })
-    );
-    setManList(filteredManus);
-  };
 
   const fetchProductList = async () => {
     const response = await fetch("https://api2.myauto.ge/ka/products/");
@@ -133,22 +105,12 @@ function App() {
     setProductList(filteredProductList);
   };
 
-  const fetchData = async () => {
-    try {
-      fetchProductList();
-      fetchManufacturers();
-      fetchCategories();
-    } catch (error) {
-      console.log("Error fetching data:", error);
-    }
-  };
-
   return (
     <>
       <Head></Head>
       {!isResponsive && <TextLine />}
       <div className="content">
-        <Navbar manData={manList} catData={catList} />
+        <Navbar />
         <ListContainer productList={productList} />
       </div>
     </>
