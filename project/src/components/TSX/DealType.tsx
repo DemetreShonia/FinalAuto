@@ -13,8 +13,14 @@ interface props {
   drop: boolean;
   setDrop: React.Dispatch<React.SetStateAction<boolean>>;
   resetOthers: () => void;
+  setForRent: (forRent: number) => void;
 }
-const DealType: React.FC<props> = ({ drop, setDrop, resetOthers }) => {
+const DealType: React.FC<props> = ({
+  drop,
+  setDrop,
+  resetOthers,
+  setForRent,
+}) => {
   // const [drop, setDrop] = useState<boolean>(false);
   const [checkboxes, setCheckboxes] = useState<CheckboxState>({
     იყიდება: false,
@@ -107,11 +113,12 @@ const DealType: React.FC<props> = ({ drop, setDrop, resetOthers }) => {
             {/* Separate first two checkboxes */}
             <div
               className="checkboxCover"
-              onClick={() =>
+              onClick={() => {
+                setForRent(0);
                 handleCheckboxChange({
                   target: { name: "იყიდება", checked: !checkboxes.იყიდება },
-                } as ChangeEvent<HTMLInputElement>)
-              }
+                } as ChangeEvent<HTMLInputElement>);
+              }}
             >
               <div
                 className={checkboxes.იყიდება ? "checker checkedd" : "checker"}
@@ -129,11 +136,12 @@ const DealType: React.FC<props> = ({ drop, setDrop, resetOthers }) => {
             </div>
             <div
               className="checkboxCover"
-              onClick={() =>
+              onClick={() => {
+                setForRent(1);
                 handleCheckboxChange({
                   target: { name: "ქირავდება", checked: !checkboxes.ქირავდება },
-                } as ChangeEvent<HTMLInputElement>)
-              }
+                } as ChangeEvent<HTMLInputElement>);
+              }}
             >
               <div
                 className={
@@ -158,11 +166,12 @@ const DealType: React.FC<props> = ({ drop, setDrop, resetOthers }) => {
                 .map(([name, checked]) => (
                   <div
                     className="checkboxCover"
-                    onClick={() =>
+                    onClick={() => {
+                      setForRent(1);
                       handleCheckboxChange({
                         target: { name, checked: !checked },
-                      } as ChangeEvent<HTMLInputElement>)
-                    }
+                      } as ChangeEvent<HTMLInputElement>);
+                    }}
                   >
                     <div className={checked ? "checker checkedd" : "checker"}>
                       <BsCheck />

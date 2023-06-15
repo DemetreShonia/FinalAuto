@@ -14,9 +14,10 @@ type Props = {
   drop: boolean;
   setDrop: React.Dispatch<React.SetStateAction<boolean>>;
   resetOthers: () => void;
+  setModels: (models: number[]) => void;
 };
 
-const Model: React.FC<Props> = ({ drop, setDrop, resetOthers }) => {
+const Model: React.FC<Props> = ({ drop, setDrop, resetOthers, setModels }) => {
   //   const [drop, setDrop] = useState<boolean>(false);
   const [checkboxes, setCheckboxes] = useState<CheckboxState>({
     მოდელი1: false,

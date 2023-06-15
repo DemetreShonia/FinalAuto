@@ -9,6 +9,7 @@ type Props = {
   drop: boolean;
   setDrop: React.Dispatch<React.SetStateAction<boolean>>;
   resetOthers: () => void;
+  setManufacturers: (manufacturers: number[]) => void;
 };
 
 const Manufacturer: React.FC<Props> = ({
@@ -16,6 +17,7 @@ const Manufacturer: React.FC<Props> = ({
   drop,
   setDrop,
   resetOthers,
+  setManufacturers,
 }) => {
   // const [drop, setDrop] = useState<boolean>(false);
 
