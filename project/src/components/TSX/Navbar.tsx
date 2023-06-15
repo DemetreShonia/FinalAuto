@@ -34,8 +34,6 @@ const Navbar = (props: Props) => {
   const valuteHandler = () => {
     setValuteState((valuteState) => !valuteState);
   };
-  console.log(props.catData);
-  console.log(props.manData);
   return (
     <div className="navbar">
       <div className="navbar-options">
