@@ -27,12 +27,12 @@ const Manufacturer: React.FC<Props> = ({
 
   const [checkedManData, setCheckedManData] = useState<CheckData[]>([]);
 
-  const activeCheckboxes = checkedManData.map(({ man_name, man_id }) => {
+  const activeCheckboxes = checkedManData.map(({ man_name }) => {
     return man_name;
   });
 
   useEffect(() => {
-    const manuIds = checkedManData.map(({ man_name, man_id }) => {
+    const manuIds = checkedManData.map(({ man_id }) => {
       return +man_id;
     });
     setManufacturers(manuIds);

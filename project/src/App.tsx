@@ -36,6 +36,8 @@ export interface ManData {
 
 export interface CatData {
   title: string;
+  category_id: number;
+  category_type: number;
 }
 
 function App() {

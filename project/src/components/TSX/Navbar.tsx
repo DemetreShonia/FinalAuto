@@ -30,18 +30,18 @@ const Navbar = () => {
     manufacturers: [],
     models: [],
     categories: [],
-    vehicleType: 1,
+    vehicleType: 0,
     from: -1,
     to: -1,
   });
 
   const filterManDataByVehicleType = (manData: ManData[], id: number) => {
     switch (id) {
-      case 1: // car
+      case 0: // car
         return manData.filter(({ is_car }) => is_car == 1); // not ===
-      case 2: // moto
+      case 1: // moto
         return manData.filter(({ is_moto }) => is_moto == 1);
-      case 3: // spec
+      case 2: // spec
         return manData.filter(({ is_spec }) => is_spec == 1);
     }
   };
@@ -50,10 +50,12 @@ const Navbar = () => {
     const response = await fetch("https://api2.myauto.ge/ka/cats/get");
     const json = await response.json();
     const manu: CatData[] = json.data;
-    const filteredManus = manu.map(({ title }) => ({
+    const catDatas = manu.map(({ title, category_id, category_type }) => ({
       title,
+      category_id,
+      category_type,
     }));
-    setCatList(filteredManus);
+    setCatList(catDatas);
   };
   const fetchManufacturers = async () => {
     const response = await fetch("https://static.my.ge/myauto/js/mans.json");
@@ -61,7 +63,7 @@ const Navbar = () => {
     const manu: ManData[] = json;
 
     setManList(manu);
-    setMandataToUse(filterManDataByVehicleType(manu, 1));
+    setMandataToUse(filterManDataByVehicleType(manu, 0));
   };
   const fetchData = async () => {
     try {
@@ -76,7 +78,6 @@ const Navbar = () => {
     fetchData();
   }, []);
 
-  console.log(filterInfo);
   const setForRent = (v: number) => {
     setFilterInfo({ ...filterInfo, forRent: v });
   };
@@ -129,11 +130,11 @@ const Navbar = () => {
         <button
           type="submit"
           className={
-            filterInfo.vehicleType === 1 ? "btn left chosen" : "btn left"
+            filterInfo.vehicleType === 0 ? "btn left chosen" : "btn left"
           }
-          onClick={() => setVehicleTypeID(1)}
+          onClick={() => setVehicleTypeID(0)}
         >
-          {filterInfo.vehicleType == 1 ? (
+          {filterInfo.vehicleType == 0 ? (
             <Carimage color="#FD4100" />
           ) : (
             <Carimage color="#8C929B" />
@@ -141,10 +142,10 @@ const Navbar = () => {
         </button>
         <button
           type="submit"
-          className={filterInfo.vehicleType === 2 ? "btn chosen" : "btn"}
-          onClick={() => setVehicleTypeID(2)}
+          className={filterInfo.vehicleType === 1 ? "btn chosen" : "btn"}
+          onClick={() => setVehicleTypeID(1)}
         >
-          {filterInfo.vehicleType == 2 ? (
+          {filterInfo.vehicleType == 1 ? (
             <Tractorimage color="#FD4100" />
           ) : (
             <Tractorimage color="#8C929B" />
@@ -153,11 +154,11 @@ const Navbar = () => {
         <button
           type="submit"
           className={
-            filterInfo.vehicleType === 3 ? "btn right chosen" : "btn right"
+            filterInfo.vehicleType === 2 ? "btn right chosen" : "btn right"
           }
-          onClick={() => setVehicleTypeID(3)}
+          onClick={() => setVehicleTypeID(2)}
         >
-          {filterInfo.vehicleType == 3 ? (
+          {filterInfo.vehicleType == 2 ? (
             <Motoimage color="#FD4100" />
           ) : (
             <Motoimage color="#8C929B" />
@@ -199,6 +200,8 @@ const Navbar = () => {
         <div className="title">კატეგორია</div>
         <div className="dropdown" onClick={() => setDropNum(4)}>
           <Category
+            vehicleType={filterInfo.vehicleType}
+            catList={catList}
             setCategories={setCategories}
             drop={categoryOpen}
             setDrop={setCategoryOpen}

@@ -55,7 +55,6 @@ const Model: React.FC<Props> = ({
     }));
     return filtered;
   };
-  console.log(filteredModels?.length);
   useEffect(() => {
     const fetchData = async () => {
       // if there is time here we have manu ID and we can get NAME of manufacturer

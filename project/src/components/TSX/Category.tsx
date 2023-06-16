@@ -1,6 +1,7 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { BsCheck } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
+import { CatData } from "../../App";
 
 interface CheckboxState {
   კატეგორია1: boolean;
@@ -14,6 +15,8 @@ type Props = {
   setDrop: React.Dispatch<React.SetStateAction<boolean>>;
   resetOthers: () => void;
   setCategories: (cats: number[]) => void;
+  catList: CatData[];
+  vehicleType: number;
 };
 
 const Category: React.FC<Props> = ({
@@ -21,7 +24,20 @@ const Category: React.FC<Props> = ({
   setDrop,
   resetOthers,
   setCategories,
+  catList,
+  vehicleType,
 }) => {
+  const [filteredCats, setFilteredCats] = useState<CatData[]>();
+  useEffect(() => {
+    // selected vehicle type
+    const filteredCatData = catList.filter(
+      (x) => x.category_type == vehicleType
+    );
+
+    setFilteredCats(filteredCatData);
+    console.log(filteredCatData);
+  }, [catList, vehicleType]);
+
   // const [drop, setDrop] = useState<boolean>(false);
   const [checkboxes, setCheckboxes] = useState<CheckboxState>({
     კატეგორია1: false,
@@ -59,12 +75,6 @@ const Category: React.FC<Props> = ({
     }
   };
 
-  const getActiveCheckboxes = () => {
-    const activeCheckboxes = Object.entries(checkboxes)
-      .filter(([name, checked]) => checked)
-      .map(([name]) => name);
-    return activeCheckboxes;
-  };
   const activeList = getActiveCheckboxStrings();
 
   return (
