@@ -76,6 +76,7 @@ const Model: React.FC<Props> = ({
     checkedModels.map(({ model_name }) => {
       return model_name;
     });
+  console.log(checkedModels);
 
   const handleCheckboxChange = (filterData: FilteredModels) => {
     const oldList = checkedModels;

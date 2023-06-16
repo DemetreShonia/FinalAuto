@@ -3,13 +3,6 @@ import { BsCheck } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 import { CatData } from "../../App";
 
-interface CheckboxState {
-  კატეგორია1: boolean;
-  კატეგორია2: boolean;
-  კატეგორია3: boolean;
-  კატეგორია4: boolean;
-}
-
 type Props = {
   drop: boolean;
   setDrop: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,6 +21,14 @@ const Category: React.FC<Props> = ({
   vehicleType,
 }) => {
   const [filteredCats, setFilteredCats] = useState<CatData[]>();
+  const [checkedCats, setCheckedCats] = useState<CatData[]>();
+
+  console.log(filteredCats);
+  const allCheckedCatTitles =
+    checkedCats &&
+    checkedCats.map(({ title }) => {
+      return title;
+    });
   useEffect(() => {
     // selected vehicle type
     const filteredCatData = catList.filter(
@@ -39,35 +40,39 @@ const Category: React.FC<Props> = ({
   }, [catList, vehicleType]);
 
   // const [drop, setDrop] = useState<boolean>(false);
-  const [checkboxes, setCheckboxes] = useState<CheckboxState>({
-    კატეგორია1: false,
-    კატეგორია2: false,
-    კატეგორია3: false,
-    კატეგორია4: false,
-  });
 
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = event.target;
-    setCheckboxes({ ...checkboxes, [name]: checked });
+  const handleCheckboxChange = (catData: CatData) => {
+    const oldList = checkedCats;
+
+    if (allCheckedCatTitles && allCheckedCatTitles.includes(catData.title)) {
+      const newList = oldList
+        ? oldList.filter((item) => item.title !== catData.title)
+        : checkedCats;
+      setCheckedCats(newList);
+
+      const catIds = newList.map(({ category_id }) => {
+        return category_id;
+      });
+      setCategories(catIds);
+    } else {
+      if (oldList) {
+        const newList = [...oldList, catData];
+        setCheckedCats(newList);
+        const catIds = newList.map(({ category_id }) => {
+          return category_id;
+        });
+        setCategories(catIds);
+      } else {
+        setCheckedCats([catData]);
+      }
+    }
   };
-
-  const setAllFalse = () => {
-    setCheckboxes({
-      კატეგორია1: false,
-      კატეგორია2: false,
-      კატეგორია3: false,
-      კატეგორია4: false,
-    });
-  };
-
+  const setAllFalse = () => {};
   const getActiveCheckboxStrings = () => {
-    const activeCheckboxes = Object.entries(checkboxes)
-      .filter(([name, checked]) => checked)
-      .map(([name]) => name);
-    // make string out of activeCheckboxes
-    if (activeCheckboxes.length >= 1) {
-      let res = activeCheckboxes.join(", ");
-      // if res is too long, cut it and add '...'
+    if (!allCheckedCatTitles) return "მოდელი";
+
+    if (allCheckedCatTitles.length >= 1) {
+      let res = allCheckedCatTitles.join(", ");
       if (res.length > 18) {
         res = res.slice(0, 18) + "...";
       }
@@ -76,7 +81,6 @@ const Category: React.FC<Props> = ({
   };
 
   const activeList = getActiveCheckboxStrings();
-
   return (
     <div className="CategoryContainer">
       <div
@@ -98,26 +102,37 @@ const Category: React.FC<Props> = ({
           <div className="Modeloptions">
             <div className="checkbox-container">
               <div className="Modelcheckboxes">
-                {Object.entries(checkboxes).map(([name, checked]) => (
-                  <div className="checkboxCover">
+                {filteredCats &&
+                  filteredCats.map((checkbox) => (
                     <div
-                      className={checked ? "checker checkedd" : "checker"}
-                      onClick={() =>
-                        handleCheckboxChange({
-                          target: { name, checked: !checked },
-                        })
-                      }
+                      className="checkboxCover"
+                      onClick={() => {
+                        handleCheckboxChange(checkbox);
+                      }}
+                      key={checkbox.title}
                     >
-                      <BsCheck />
+                      <div
+                        className={
+                          allCheckedCatTitles &&
+                          allCheckedCatTitles.includes(checkbox.title)
+                            ? "checker checkedd"
+                            : "checker"
+                        }
+                      >
+                        <BsCheck />
+                      </div>
+                      <div
+                        className={
+                          allCheckedCatTitles &&
+                          allCheckedCatTitles.includes(checkbox.title)
+                            ? "checkbox"
+                            : "checkbox"
+                        }
+                      >
+                        {checkbox.title}
+                      </div>
                     </div>
-                    <div
-                      key={name}
-                      className={checked ? "checkbox checked!" : "checkbox"}
-                    >
-                      {name}
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
             <div className="emptyFilter">
