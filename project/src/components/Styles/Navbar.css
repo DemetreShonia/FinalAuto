@@ -35,9 +35,9 @@
   cursor: pointer;
 }
 
-.options :hover {
+/* .options :hover {
   background-color: white;
-}
+} */
 
 .left {
   border-radius: 10px 0 0 0;
@@ -199,11 +199,14 @@
 .Modelcheckboxes {
   border: 1px solid #e2e5eb;
   border-radius: 5px;
-  margin: auto;
+  /* margin: 10px; */
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding: 5px;
+  /* padding: 5px; */
+
+  width: 202px;
+  height: 120px;
   overflow-y: auto;
   overflow-x: hidden;
   text-align: justify;

@@ -40,15 +40,8 @@ const Model: React.FC<Props> = ({
   selectedManuIds,
 }) => {
   const [filteredModels, setFilteredModels] = useState<FilteredModels[]>();
-  const [checkedModels, setChosenModels] = useState<string[]>([]);
-  const allModelNames =
-    filteredModels &&
-    filteredModels.map(({ model_name, model_id }) => {
-      return model_name;
-    });
+  const [checkedModels, setChosenModels] = useState<FilteredModels[]>([]);
 
-  console.log(allModelNames);
-  console.log(filteredModels);
   const fetchModel = async (man_id: number) => {
     const response = await fetch(
       `https://api2.myauto.ge/ka/getManModels?man_id=${man_id}`
@@ -62,42 +55,62 @@ const Model: React.FC<Props> = ({
     }));
     return filtered;
   };
+  console.log(filteredModels?.length);
   useEffect(() => {
     const fetchData = async () => {
+      // if there is time here we have manu ID and we can get NAME of manufacturer
       for (let i = 0; i < selectedManuIds.length; i++) {
         const innerModel: FilteredModels[] = await fetchModel(
           selectedManuIds[i]
         );
-        setFilteredModels(innerModel);
-        break;
+        if (filteredModels)
+          setFilteredModels(innerModel.concat(filteredModels));
+        else setFilteredModels([...innerModel]);
       }
     };
 
     fetchData();
   }, [selectedManuIds]);
 
+  const allCheckedModelNames =
+    checkedModels &&
+    checkedModels.map(({ model_name }) => {
+      return model_name;
+    });
+
   const handleCheckboxChange = (filterData: FilteredModels) => {
     const oldList = checkedModels;
-    console.log(checkedModels);
 
-    if (checkedModels && checkedModels.includes(filterData.model_name)) {
+    if (
+      allCheckedModelNames &&
+      allCheckedModelNames.includes(filterData.model_name)
+    ) {
       const newList = oldList
-        ? oldList.filter((item) => item !== filterData.model_name)
+        ? oldList.filter((item) => item.model_name !== filterData.model_name)
         : checkedModels;
       setChosenModels(newList);
+
+      const modelIds = newList.map(({ model_id }) => {
+        return model_id;
+      });
+      setModels(modelIds);
     } else {
       if (oldList) {
-        const newList = [...oldList, filterData.model_name];
+        const newList = [...oldList, filterData];
         setChosenModels(newList);
+        const modelIds = newList.map(({ model_id }) => {
+          return model_id;
+        });
+        setModels(modelIds);
       }
     }
   };
 
   const getActiveCheckboxStrings = () => {
-    if (!checkedModels) return "მოდელი";
+    if (!allCheckedModelNames) return "მოდელი";
 
-    if (checkedModels.length >= 1) {
-      let res = checkedModels.join(", ");
+    if (allCheckedModelNames.length >= 1) {
+      let res = allCheckedModelNames.join(", ");
       if (res.length > 18) {
         res = res.slice(0, 18) + "...";
       }
@@ -133,15 +146,14 @@ const Model: React.FC<Props> = ({
                     <div
                       className="checkboxCover"
                       onClick={() => {
-                        console.log(checkbox.model_name);
                         handleCheckboxChange(checkbox);
                       }}
                       key={checkbox.model_name}
                     >
                       <div
                         className={
-                          checkedModels &&
-                          checkedModels.includes(checkbox.model_name)
+                          allCheckedModelNames &&
+                          allCheckedModelNames.includes(checkbox.model_name)
                             ? "checker checkedd"
                             : "checker"
                         }
@@ -150,8 +162,8 @@ const Model: React.FC<Props> = ({
                       </div>
                       <div
                         className={
-                          checkedModels &&
-                          checkedModels.includes(checkbox.model_name)
+                          allCheckedModelNames &&
+                          allCheckedModelNames.includes(checkbox.model_name)
                             ? "checkbox"
                             : "checkbox"
                         }

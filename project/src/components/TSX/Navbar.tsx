@@ -76,7 +76,7 @@ const Navbar = () => {
     fetchData();
   }, []);
 
-  // console.log(filterInfo);
+  console.log(filterInfo);
   const setForRent = (v: number) => {
     setFilterInfo({ ...filterInfo, forRent: v });
   };
