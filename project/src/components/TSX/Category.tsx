@@ -23,7 +23,6 @@ const Category: React.FC<Props> = ({
   const [filteredCats, setFilteredCats] = useState<CatData[]>();
   const [checkedCats, setCheckedCats] = useState<CatData[]>();
 
-  console.log(filteredCats);
   const allCheckedCatTitles =
     checkedCats &&
     checkedCats.map(({ title }) => {
@@ -36,7 +35,6 @@ const Category: React.FC<Props> = ({
     );
 
     setFilteredCats(filteredCatData);
-    console.log(filteredCatData);
   }, [catList, vehicleType]);
 
   // const [drop, setDrop] = useState<boolean>(false);
@@ -69,7 +67,7 @@ const Category: React.FC<Props> = ({
   };
   const setAllFalse = () => {};
   const getActiveCheckboxStrings = () => {
-    if (!allCheckedCatTitles) return "მოდელი";
+    if (!allCheckedCatTitles) return "კატეგორია";
 
     if (allCheckedCatTitles.length >= 1) {
       let res = allCheckedCatTitles.join(", ");

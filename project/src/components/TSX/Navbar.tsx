@@ -7,6 +7,7 @@ import DealType from "./DealType";
 import Manufacturer from "./Manufacturer";
 import Category from "./Category";
 import Model from "./Model";
+import { ProductData } from "../../App";
 
 import { ManData } from "../../App";
 import { CatData } from "../../App";
@@ -21,7 +22,12 @@ export interface FilterInformation {
   to: number;
 }
 
-const Navbar = () => {
+type Props = {
+  setLink: (link: string) => void;
+  setProductList: (list: ProductData[]) => void;
+};
+
+const Navbar = ({ setLink, setProductList }: Props) => {
   const [manList, setManList] = useState<ManData[]>([]);
   const [catList, setCatList] = useState<CatData[]>([]);
   const [manDataToUse, setMandataToUse] = useState<ManData[]>();
@@ -105,7 +111,76 @@ const Navbar = () => {
   };
 
   function search() {
+    const link = `https://api2.myauto.ge/ka/products/?${
+      filterInfo.forRent == -1 ? "" : "ForRent=" + filterInfo.forRent + "&"
+    }${filterInfo.from == -1 ? "" : "PriceFrom=" + filterInfo.from + "&"}${
+      filterInfo.to == -1 ? "" : "PriceTo=" + filterInfo.to + "&"
+    }${
+      filterInfo.categories.length == 0
+        ? ""
+        : "Cats=" + filterInfo.categories.join(".")
+    }${
+      filterInfo.manufacturers.length == 0
+        ? ""
+        : "Mans=" + filterInfo.manufacturers.join(".")
+    }`;
+
+    const fetchProductList = async () => {
+      const response = await fetch("https://api2.myauto.ge/ka/products/");
+      const json = await response.json();
+
+      const productList: ProductData[] = json.data.items;
+      const filteredProductList = productList.map(
+        ({
+          for_rent,
+          category_id,
+          model_id,
+          car_model,
+          man_id,
+          photo,
+          photo_ver,
+          prod_year,
+          car_run_km,
+          engine_volume,
+          car_id,
+          customs_passed,
+          drive_type_id,
+          price,
+          pcide_usd,
+          order_date,
+          views,
+          right_wheel,
+        }) => ({
+          for_rent,
+          category_id,
+          model_id,
+          car_model,
+          man_id,
+          photo,
+          photo_ver,
+          prod_year,
+          car_run_km,
+          engine_volume,
+          car_id,
+          customs_passed,
+          drive_type_id,
+          price,
+          pcide_usd,
+          order_date,
+          views,
+          right_wheel,
+        })
+      );
+      setProductList(filteredProductList);
+      setLink(link);
+    };
+
+    fetchProductList();
+    // we have also filterInfo.models of selected!! But DAVIGALEEEEE, mteli dgea kompiutertan vzivar
+    // vinme ketili dagvexmareba imedia, torem agar shemidzlia
+
     // generate link and stuff
+    console.log(link);
   }
   const [valuteState, setValuteState] = useState<boolean>(false);
   const [dropNum, setDropNum] = useState<number>(-1);
@@ -244,7 +319,9 @@ const Navbar = () => {
             ></input>
           </div>
         </div>
-        <button className="search-btn">ძებნა</button>
+        <button className="search-btn" onClick={search}>
+          ძებნა
+        </button>
       </div>
     </div>
   );
