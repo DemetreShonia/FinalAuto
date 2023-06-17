@@ -80,7 +80,7 @@ const Category: React.FC<Props> = ({
 
   const activeList = getActiveCheckboxStrings();
   return (
-    <div className="CategoryContainer">
+    <div className="ModelContainer">
       <div
         className="Category"
         onClick={() => {

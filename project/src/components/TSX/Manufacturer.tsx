@@ -68,7 +68,7 @@ const Manufacturer: React.FC<Props> = ({
   const activeList = getActiveCheckboxStrings();
 
   return (
-    <div className="ManufacturerContainer">
+    <div className="ModelContainer">
       <div
         className="Manufacture"
         onClick={() => {

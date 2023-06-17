@@ -15,7 +15,6 @@
   z-index: 10;
   margin-left: 150px;
 
-
   height: 540px;
   border: 1px solid #e2e5eb;
   border-radius: 10px 10px 10px 10px;
@@ -140,7 +139,10 @@
   position: relative;
   /* background-color: #fd4100; */
 }
-
+.ModelContainer {
+  position: relative;
+  /* background-color: #fd4100; */
+}
 .DropDown {
   /* margin-top: 10px; */
   position: absolute;
@@ -212,7 +214,8 @@
   text-align: justify;
 }
 
-.Modeloptions {}
+.Modeloptions {
+}
 
 .checkbox-container {
   margin-left: auto;
@@ -368,10 +371,8 @@
   cursor: pointer;
 }
 
-
 @media (max-width: 550px) {
   .navbar {
     display: none;
   }
-
 }

@@ -1,12 +1,13 @@
 import React, { ChangeEvent, useState, useEffect } from "react";
 import { BsCheck } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
+import { manModel } from "./OurDataTypes";
 
 type Props = {
   drop: boolean;
   setDrop: React.Dispatch<React.SetStateAction<boolean>>;
   resetOthers: () => void;
-  setModels: (models: number[]) => void;
+  setModels: (models: manModel[]) => void;
   selectedManuIds: number[];
 };
 
@@ -28,6 +29,7 @@ interface ModelData {
 type FilteredModels = {
   model_name: string;
   model_id: number;
+  man_id: number;
 };
 
 // is car stuff? not yet...
@@ -52,6 +54,7 @@ const Model: React.FC<Props> = ({
     const filtered = modelList.map(({ model_name, model_id }) => ({
       model_name,
       model_id,
+      man_id,
     }));
     return filtered;
   };
@@ -89,16 +92,16 @@ const Model: React.FC<Props> = ({
         : checkedModels;
       setChosenModels(newList);
 
-      const modelIds = newList.map(({ model_id }) => {
-        return model_id;
+      const modelIds = newList.map(({ model_name, model_id, man_id }) => {
+        return { model_name, model_id, man_id };
       });
       setModels(modelIds);
     } else {
       if (oldList) {
         const newList = [...oldList, filterData];
         setChosenModels(newList);
-        const modelIds = newList.map(({ model_id }) => {
-          return model_id;
+        const modelIds = newList.map(({ model_name, model_id, man_id }) => {
+          return { model_name, model_id, man_id };
         });
         setModels(modelIds);
       }

@@ -92,7 +92,7 @@ const DealType: React.FC<props> = ({
 
   const activeList = getActiveCheckboxStrings();
   return (
-    <div className="DealTypeContainer">
+    <div className="ModelContainer">
       <div
         className="DealType"
         onClick={() => {

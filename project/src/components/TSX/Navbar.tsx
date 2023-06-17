@@ -11,11 +11,12 @@ import { ProductData } from "../../App";
 
 import { ManData } from "../../App";
 import { CatData } from "../../App";
+import { manModel } from "./OurDataTypes";
 
 export interface FilterInformation {
   forRent: number;
   manufacturers: number[];
-  models: number[];
+  models: manModel[];
   categories: number[];
   vehicleType: number;
   from: number;
@@ -97,7 +98,7 @@ const Navbar = ({ setLink, setProductList }: Props) => {
     setMandataToUse(filterManDataByVehicleType(manList, v));
   };
 
-  const setModels = (v: number[]) => {
+  const setModels = (v: manModel[]) => {
     setFilterInfo({ ...filterInfo, models: v });
   };
   const setCategories = (v: number[]) => {
@@ -110,7 +111,35 @@ const Navbar = ({ setLink, setProductList }: Props) => {
     setFilterInfo({ ...filterInfo, to: v });
   };
 
+  useEffect(() => {
+    console.log(filterInfo);
+  }, [filterInfo]);
+
   function search() {
+    let manModelLink = "";
+    if (filterInfo.models.length === 0) {
+      manModelLink = filterInfo.manufacturers.join("-");
+    } else {
+      // create a hashmap where you will store manufacturers field man_id as keys and models fields model_id in lists, join by man_id
+      var map = new Map<number, Array<number>>();
+      for (var i = 0; i < filterInfo.models.length; ++i) {
+        if (!map.has(filterInfo.models[i].man_id)) {
+          map.set(filterInfo.models[i].man_id, []);
+        }
+        map
+          ?.get(filterInfo.models[i].man_id)
+          ?.push(filterInfo.models[i].model_id);
+      }
+
+      map.forEach((modelIds, key) => {
+        console.log(key, modelIds);
+        manModelLink += `${key}.${modelIds.join(".")}` + "-";
+      });
+
+      manModelLink = manModelLink.slice(0, -1);
+
+      // convert the map to an array of objects with manufacturer id and list of all its models ids
+    }
     const link = `https://api2.myauto.ge/ka/products/?${
       filterInfo.forRent == -1 ? "" : "ForRent=" + filterInfo.forRent + "&"
     }${filterInfo.from == -1 ? "" : "PriceFrom=" + filterInfo.from + "&"}${
@@ -119,17 +148,15 @@ const Navbar = ({ setLink, setProductList }: Props) => {
       filterInfo.categories.length == 0
         ? ""
         : "Cats=" + filterInfo.categories.join(".")
-    }${
-      filterInfo.manufacturers.length == 0
-        ? ""
-        : "Mans=" + filterInfo.manufacturers.join(".")
-    }`;
+    }${filterInfo.manufacturers.length == 0 ? "" : "Mans=" + manModelLink}`;
+    console.log(link);
 
     const fetchProductList = async () => {
-      const response = await fetch("https://api2.myauto.ge/ka/products/");
+      const response = await fetch(link);
       const json = await response.json();
 
       const productList: ProductData[] = json.data.items;
+      console.log(productList);
       const filteredProductList = productList.map(
         ({
           for_rent,
@@ -180,7 +207,7 @@ const Navbar = ({ setLink, setProductList }: Props) => {
     // vinme ketili dagvexmareba imedia, torem agar shemidzlia
 
     // generate link and stuff
-    console.log(link);
+    // console.log(link);
   }
   const [valuteState, setValuteState] = useState<boolean>(false);
   const [dropNum, setDropNum] = useState<number>(-1);
