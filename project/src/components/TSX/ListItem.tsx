@@ -55,7 +55,7 @@ const ListItem = ({ item, modelName, manName }: Props) => {
             </div>
           </div>
           <img src={flagIcon} className="flagIcon" />
-          <div className="location"> მდებარეობა </div>
+          <div className="location"> თბილისი </div>
         </div>
         <div className="line2">
           <div className="carInfo">
