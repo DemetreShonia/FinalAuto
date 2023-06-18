@@ -2,14 +2,19 @@ import { useState } from "react";
 import arrow from "../Icons/arrow  down.png";
 import "../Styles/TimeFilter.css";
 
-const TimeFilter = () => {
+interface props{
+  setPeriod: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const TimeFilter:React.FC<props> = ({setPeriod}) => {
   const [selected, setSelected] = useState(-1);
   const [isOpen, setIsOpen] = useState(false);
 
-  const filterItems = ["1 საათი", "3 საათი", "6 საათი", "12 საათი", "24 საათი"];
+  const filterItems = ["1 საათი", "2 საათი", "3 საათი", "1 დღე", "2 დღე","3 დღე","1 კვირა", "2 კვირა","3 კვირა",];
 
   const onClickedFilterItem = (id: number) => {
     setSelected(id);
+    setPeriod(id);
     setIsOpen(false);
   };
 
@@ -18,7 +23,7 @@ const TimeFilter = () => {
       <div
         className="TimeFilterCategoty"
         onClick={() => {
-          setIsOpen(true);
+          setIsOpen(op => !op);
         }}
       >
         {selected == -1 ? "პერიოდი" : filterItems[selected]}{" "}

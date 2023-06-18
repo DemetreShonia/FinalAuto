@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState, useEffect } from "react";
 import { BsCheck } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
-import { manModel } from "./OurDataTypes";
+import { manModel, modelImpoType } from "./OurDataTypes";
 
 type Props = {
   drop: boolean;
@@ -9,6 +9,7 @@ type Props = {
   resetOthers: () => void;
   setModels: (models: manModel[]) => void;
   selectedManuIds: number[];
+  setModelImpo: (modelImpo: modelImpoType[]) => void;
 };
 
 interface ModelData {
@@ -40,6 +41,7 @@ const Model: React.FC<Props> = ({
   resetOthers,
   setModels,
   selectedManuIds,
+  setModelImpo
 }) => {
   const [filteredModels, setFilteredModels] = useState<FilteredModels[]>();
   const [checkedModels, setChosenModels] = useState<FilteredModels[]>([]);
@@ -82,7 +84,7 @@ const Model: React.FC<Props> = ({
 
   const handleCheckboxChange = (filterData: FilteredModels) => {
     const oldList = checkedModels;
-
+    let nList: any = [];
     if (
       allCheckedModelNames &&
       allCheckedModelNames.includes(filterData.model_name)
@@ -96,6 +98,7 @@ const Model: React.FC<Props> = ({
         return { model_name, model_id, man_id };
       });
       setModels(modelIds);
+      nList = newList
     } else {
       if (oldList) {
         const newList = [...oldList, filterData];
@@ -104,8 +107,22 @@ const Model: React.FC<Props> = ({
           return { model_name, model_id, man_id };
         });
         setModels(modelIds);
+        nList = newList
       }
     }
+
+    const impos: modelImpoType[] = nList.map((item: any) => {
+      console.log(item);
+      return {
+        modelName: item.model_name,
+        modelId: item.model_id,
+        manId: item.man_id
+      };
+    });
+    setModelImpo(impos)
+
+
+
   };
 
   const getActiveCheckboxStrings = () => {
@@ -155,7 +172,7 @@ const Model: React.FC<Props> = ({
                       <div
                         className={
                           allCheckedModelNames &&
-                          allCheckedModelNames.includes(checkbox.model_name)
+                            allCheckedModelNames.includes(checkbox.model_name)
                             ? "checker checkedd"
                             : "checker"
                         }
@@ -165,7 +182,7 @@ const Model: React.FC<Props> = ({
                       <div
                         className={
                           allCheckedModelNames &&
-                          allCheckedModelNames.includes(checkbox.model_name)
+                            allCheckedModelNames.includes(checkbox.model_name)
                             ? "checkbox"
                             : "checkbox"
                         }

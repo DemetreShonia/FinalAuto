@@ -125,7 +125,7 @@
     margin-right: 10px;
     /* secondary/green 300 */
 
-    color: #26B753;
+    /* color: #26B753; */
 
 }
 
@@ -205,3 +205,15 @@
 }
 
 
+.customs{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.customsPassed{
+    color: #26B753;
+}
+.customsNotPassed{
+    color: #b72b26;
+}

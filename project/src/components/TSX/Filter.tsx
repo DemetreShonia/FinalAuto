@@ -1,8 +1,11 @@
 import { useState } from "react";
 import "../Styles/Filter.css";
 import arrow from "../Icons/arrow  down.png";
+interface props{
+  setSortOrder: React.Dispatch<React.SetStateAction<number>>;
+}
 
-const Filter = () => {
+const Filter:React.FC<props> = ({setSortOrder}) => {
   const [selected, setSelected] = useState(-1);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -17,6 +20,7 @@ const Filter = () => {
 
   const onClickedFilterItem = (id: number) => {
     setSelected(id);
+    setSortOrder(id);
     setIsOpen(false);
   };
 
@@ -25,7 +29,7 @@ const Filter = () => {
       <div
         className="filterCategoty"
         onClick={() => {
-          setIsOpen(true);
+          setIsOpen(op => !op);
         }}
       >
         {selected == -1 ? "გაფილტვრა" : filterItems[selected]}{" "}

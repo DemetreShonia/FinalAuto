@@ -3,6 +3,7 @@ import { BsCheck } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
 
 import { ManData } from "../../App";
+import { CheckData } from "./OurDataTypes";
 
 type Props = {
   manData: ManData[] | undefined;
@@ -10,22 +11,23 @@ type Props = {
   setDrop: React.Dispatch<React.SetStateAction<boolean>>;
   resetOthers: () => void;
   setManufacturers: (manufacturers: number[]) => void;
+  checkedManData: CheckData[];
+  setCheckedManData: React.Dispatch<React.SetStateAction<CheckData[]>>;
 };
 
-type CheckData = {
-  man_name: string;
-  man_id: number;
-};
 const Manufacturer: React.FC<Props> = ({
   manData,
   drop,
   setDrop,
   resetOthers,
   setManufacturers,
+  checkedManData,
+  setCheckedManData,
+  
 }) => {
   // const [drop, setDrop] = useState<boolean>(false);
 
-  const [checkedManData, setCheckedManData] = useState<CheckData[]>([]);
+  // const [checkedManData, setCheckedManData] = useState<CheckData[]>([]);
 
   const activeCheckboxes = checkedManData.map(({ man_name }) => {
     return man_name;
@@ -36,10 +38,12 @@ const Manufacturer: React.FC<Props> = ({
       return +man_id;
     });
     setManufacturers(manuIds);
+    console.log(checkedManData)
   }, [checkedManData]);
 
   const handleCheckboxChange = (checkData: CheckData) => {
     const oldList = checkedManData;
+ 
     if (activeCheckboxes.includes(checkData.man_name)) {
       const newList = oldList.filter(
         (item) => item.man_name !== checkData.man_name

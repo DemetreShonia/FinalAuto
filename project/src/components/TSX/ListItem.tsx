@@ -12,9 +12,11 @@ import "../Styles/ListItem.css";
 import { ProductData } from "../../App";
 type Props = {
   item: ProductData;
+  modelName: string | undefined;
+  manName: string | undefined;
 };
 
-const ListItem = ({ item }: Props) => {
+const ListItem = ({ item, modelName, manName }: Props) => {
   function calculateTimePassed(ts: string): {
     hours: number;
     days: number;
@@ -33,17 +35,24 @@ const ListItem = ({ item }: Props) => {
   }
 
   const img = `https://static.my.ge/myauto/photos/${item.photo}/thumbs/${item.car_id}_1.jpg?v=${item.photo_ver}`;
-
+  const postedDate: Date = new Date(item.order_date);
+  const currentDate: Date = new Date();
+  const timeDifference: number = currentDate.getTime() - postedDate.getTime();
+  // If posted date is more than 1 day ago, then show days ago, else show hours ago
+  const hoursAgo: number = Math.floor(timeDifference / (1000 * 3600));
+  const daysAgo: number = Math.floor(timeDifference / (1000 * 3600 * 24));
   return (
     <div className="listItem">
       <img src={img} className="photo" />
       <div className="info">
         <div className="line1">
-          <div className="carName">LAND ROVER Range Rover Evoque</div>
+          <div className="carName">{manName} {modelName}</div>
           <div className="year">{item.prod_year}</div>
           <div className="checked">
-            {" "}
-            <img src={doneIcon} alt="" /> განბაჟებული
+            <div className="customs">
+              {item.customs_passed && (<img src={doneIcon} alt="" />)}
+              <div className={item.customs_passed ? "customsPassed" : "customsNotPassed"}>{item.customs_passed ? "განბაჟებული" : "განუბაჟებელი"}</div>
+            </div>
           </div>
           <img src={flagIcon} className="flagIcon" />
           <div className="location"> მდებარეობა </div>
@@ -75,8 +84,8 @@ const ListItem = ({ item }: Props) => {
               {" "}
               {item.price >= 1000
                 ? Math.round(item.price / 1000) +
-                  "," +
-                  item.price.toString().slice(-3)
+                "," +
+                item.price.toString().slice(-3)
                 : item.price}{" "}
             </div>{" "}
             <div className="priceIcon">₾</div>
@@ -86,9 +95,7 @@ const ListItem = ({ item }: Props) => {
           <div className="view"> {item.views} ნახვა </div>
           <div className="uploadDate">
             {" "}
-            {calculateTimePassed(item.order_date).years <= 0
-              ? `  ' ${calculateTimePassed(item.order_date).days}`
-              : " "}
+            {daysAgo > 0 ? daysAgo + " დღის წინ" : hoursAgo + " საათის წინ"}
           </div>
           <div className="someIcons">
             {" "}

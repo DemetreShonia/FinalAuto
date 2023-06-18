@@ -75,3 +75,52 @@
 
     
 }
+
+
+.Pager {
+    display: flex;
+    justify-content: center;
+    width: 300px;
+    /* Adjust the width as per your requirement */
+  
+  }
+  
+  .pager-button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+  }
+  
+  .pagination {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .pagination li {
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 0 5px;
+    color: #333;
+    border-radius: 3px;
+  }
+  
+  .pagination li.active {
+    color: orange
+  }
+  
+  .PagerContainer {
+    display: flex;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    border-radius: 5px;
+  }

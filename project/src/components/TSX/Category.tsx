@@ -51,6 +51,7 @@ const Category: React.FC<Props> = ({
       const catIds = newList.map(({ category_id }) => {
         return category_id;
       });
+      // console.log(catIds)
       setCategories(catIds);
     } else {
       if (oldList) {

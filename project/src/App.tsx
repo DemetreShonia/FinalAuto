@@ -4,6 +4,7 @@ import TextLine from "./components/TSX/TextLine";
 import ListContainer from "./components/TSX/ListContainer";
 import Head from "./components/TSX/Head";
 import Navbar from "./components/TSX/Navbar";
+import { manImpoType, modelImpoType } from "./components/TSX/OurDataTypes";
 
 export interface ProductData {
   car_model: string;
@@ -43,6 +44,13 @@ export interface CatData {
 function App() {
   const [productList, setProductList] = useState<ProductData[]>([]);
   const [currentFilteredLink, setCurrentFilteredLink] = useState<string>();
+  const [manImpo, setManImpo] = useState<manImpoType[]>([]);
+  const [modelImpo, setModelImpo] = useState<modelImpoType[]>([]);
+  const [totalPosts, setTotalPosts] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [period, setPeriod] = useState<number>(-1);
+  const [sortOrder, setSortOrder] = useState<number>(-1);
   // this can be used to add + SORT ORDER STUFF
 
   const [isResponsive, setIsResponsive] = useState(window.outerWidth <= 550);
@@ -59,6 +67,11 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(period, sortOrder)
+  }, [period,sortOrder]);
+
+
   return (
     <>
       <Head></Head>
@@ -67,8 +80,33 @@ function App() {
         <Navbar
           setProductList={setProductList}
           setLink={setCurrentFilteredLink}
+          setManImpo={setManImpo}
+          setModelImpo={setModelImpo}
+          setTotalPosts={setTotalPosts}
+          setCurrentPage={setCurrentPage}
+          setPeriod={setPeriod}
+          setSortOrder={setSortOrder}
+          totalPosts={totalPosts}
+          currentPage={currentPage}
+          period={period}
+          sortOrder={sortOrder}
+          totalPages={totalPages}
+          setTotalPages={setTotalPages}
+
         />
-        <ListContainer productList={productList} />
+        <ListContainer productList={productList} manImpo={manImpo} modelImpo={modelImpo}
+          setTotalPosts={setTotalPosts}
+          setCurrentPage={setCurrentPage}
+          setPeriod={setPeriod}
+          setSortOrder={setSortOrder}
+          totalPosts={totalPosts}
+          currentPage={currentPage}
+          period={period}
+          sortOrder={sortOrder}
+          totalPages={totalPages}
+          setTotalPages={setTotalPages}
+          setModelImpo={setModelImpo} />
+
       </div>
     </>
   );

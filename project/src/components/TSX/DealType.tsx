@@ -33,7 +33,7 @@ const DealType: React.FC<props> = ({
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
-    if (name === "ქირავდება" && !checked) {
+    if (name === 'ქირავდება' && !checked) {
       setCheckboxes({
         ...checkboxes,
         [name]: checked,
@@ -42,15 +42,30 @@ const DealType: React.FC<props> = ({
         შესყიდვით: false,
         დაზღვეული: false,
       });
-    } else if (
-      (name === "დღიურად" ||
-        name === "მძღოლით" ||
-        name === "შესყიდვით" ||
-        name === "შესყიდვით" ||
-        name === "დაზღვეული") &&
-      checked
-    ) {
-      setCheckboxes({ ...checkboxes, [name]: checked, ["ქირავდება"]: checked });
+    }
+    else if (name === 'ქირავდება' && checked) {
+      setCheckboxes({
+        ...checkboxes,
+        [name]: checked,
+        იყიდება: false,
+      });
+      // setForRent(true)
+    }
+    else if (name === 'იყიდება' && checked) {
+      setCheckboxes({
+        ...checkboxes,
+        [name]: checked,
+        ქირავდება: false,
+        დღიურად: false,
+        მძღოლით: false,
+        შესყიდვით: false,
+        დაზღვეული: false,
+      });
+      // setForRent(false)
+    }
+    else if ((name === 'დღიურად' || name === 'მძღოლით' || name === 'შესყიდვით' || name === 'შესყიდვით' || name === 'დაზღვეული') && checked) {
+      setCheckboxes({ ...checkboxes, [name]: checked, ['ქირავდება']: checked, ['იყიდება']: false });
+      // setForRent(true)
     } else {
       setCheckboxes({ ...checkboxes, [name]: checked });
     }

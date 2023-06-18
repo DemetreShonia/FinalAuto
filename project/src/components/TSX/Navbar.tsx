@@ -11,7 +11,9 @@ import { ProductData } from "../../App";
 
 import { ManData } from "../../App";
 import { CatData } from "../../App";
-import { manModel } from "./OurDataTypes";
+import { manImpoType, manModel, CheckData, modelImpoType } from "./OurDataTypes";
+
+
 
 export interface FilterInformation {
   forRent: number;
@@ -26,9 +28,22 @@ export interface FilterInformation {
 type Props = {
   setLink: (link: string) => void;
   setProductList: (list: ProductData[]) => void;
+  setManImpo: (list: manImpoType[]) => void;
+  setModelImpo: (list: modelImpoType[]) => void;
+  setTotalPosts: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  setPeriod: React.Dispatch<React.SetStateAction<number>>;
+  setSortOrder: React.Dispatch<React.SetStateAction<number>>;
+  totalPosts: number;
+  currentPage: number;
+  period: number;
+  sortOrder: number;
+  totalPages: number;
+  setTotalPages: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const Navbar = ({ setLink, setProductList }: Props) => {
+const Navbar = ({ setLink, setProductList, setManImpo, setModelImpo, setTotalPosts, setCurrentPage,
+  setPeriod, setSortOrder, totalPosts, currentPage, period, sortOrder, setTotalPages, totalPages }: Props) => {
   const [manList, setManList] = useState<ManData[]>([]);
   const [catList, setCatList] = useState<CatData[]>([]);
   const [manDataToUse, setMandataToUse] = useState<ManData[]>();
@@ -111,11 +126,47 @@ const Navbar = ({ setLink, setProductList }: Props) => {
     setFilterInfo({ ...filterInfo, to: v });
   };
 
+
+  useEffect(() => {
+    console.log(filterInfo);
+  }
+    , [filterInfo]);
+
   useEffect(() => {
     console.log(filterInfo);
   }, [filterInfo]);
+  const [checkedManData, setCheckedManData] = useState<CheckData[]>([]);
 
-  function search() {
+  useEffect(() => {
+    setCurrentPage(1)
+    search(1);
+  }, [period, sortOrder]);
+  useEffect(() => {
+    search(currentPage);
+  }, [currentPage]);
+  useEffect(() => {
+    search(1);
+  }, []);
+
+  const chosenPer = (num: number) => {
+    let nnum = num
+    let sym = ""
+    if (nnum > 0 && nnum < 4) {
+      console.log("noice")
+      sym = "h"
+    } else if (nnum >= 4 && nnum < 7) {
+      nnum -= 3
+      sym = "d"
+    }
+    else if (nnum >= 7) {
+      nnum -= 6
+      sym = "w"
+    }
+    const chosenPerStr = nnum + sym
+    return chosenPerStr
+  }
+
+  function search(currPage:number) {
     let manModelLink = "";
     if (filterInfo.models.length === 0) {
       manModelLink = filterInfo.manufacturers.join("-");
@@ -140,20 +191,86 @@ const Navbar = ({ setLink, setProductList }: Props) => {
 
       // convert the map to an array of objects with manufacturer id and list of all its models ids
     }
-    const link = `https://api2.myauto.ge/ka/products/?${
-      filterInfo.forRent == -1 ? "" : "ForRent=" + filterInfo.forRent + "&"
-    }${filterInfo.from == -1 ? "" : "PriceFrom=" + filterInfo.from + "&"}${
-      filterInfo.to == -1 ? "" : "PriceTo=" + filterInfo.to + "&"
-    }${
-      filterInfo.categories.length == 0
-        ? ""
-        : "Cats=" + filterInfo.categories.join(".")
-    }${filterInfo.manufacturers.length == 0 ? "" : "Mans=" + manModelLink}`;
+
+    let useManIds = [];
+    let link = `https://api2.myauto.ge/ka/products/?
+      ${filterInfo.forRent == -1 ? "" : "ForRent=" + filterInfo.forRent + "&"}
+      ${filterInfo.from == -1 ? "" : "PriceFrom=" + filterInfo.from + "&"}
+      ${filterInfo.to == -1 ? "" : "PriceTo=" + filterInfo.to + "&"}
+      ${filterInfo.categories.length == 0 ? "" : "Cats=" + filterInfo.categories.join(".") + "&"}
+      ${filterInfo.manufacturers.length == 0 ? "" : "Mans=" + manModelLink + "&"}`
+
+
+    // remove whitespaces from link
+    link = link.replace(/\s/g, '');
+    let allManList: CheckData[] = manList.map(man => {
+      return { man_name: man.man_name, man_id: man.man_id }
+    });
+    if (link === "https://api2.myauto.ge/ka/products/?") {
+      // console.log(manList, "MANLIST")
+      useManIds = manList.map((man) => man.man_id)
+
+      const concIds = manList.map((man) => man.man_id).join("-");
+      link = "https://api2.myauto.ge/ka/products/?Mans=" + concIds + "&";
+    }
+    link = link +
+      `${sortOrder != -1 ? "SortOrder=" + (sortOrder + 1) + "&" : ""}
+    ${period != -1 ? "Period=" + chosenPer(period + 1) : ""}`
+      + `&Page=${currPage}`
+
     console.log(link);
+    // console.log(filterInfo.categories,"Categories");
+
+    const getManImpos = async () => {
+      let manImpos = null
+      if (useManIds.length === 0) {
+        manImpos = await Promise.all(
+          checkedManData.map(async (man) => {
+            const modelResponse = await fetch(
+              `https://api2.myauto.ge/ka/getManModels?man_id=${man.man_id}`
+            );
+            const modelJson = await modelResponse.json();
+            console.log(modelJson.data);
+
+            return { manName: man.man_name, manId: man.man_id, models: modelJson.data };
+          })
+        );
+      }
+      else {
+
+        manImpos = await Promise.all(
+          allManList.map(async (man) => {
+            const modelResponse = await fetch(
+              `https://api2.myauto.ge/ka/getManModels?man_id=${man.man_id}`
+            );
+            const modelJson = await modelResponse.json();
+            // console.log(modelJson.data);
+
+            return { manName: man.man_name, manId: man.man_id, models: modelJson.data };
+          })
+        );
+      }
+
+
+      return manImpos;
+    };
+
+    getManImpos().then((manImpos) => {
+      setManImpo(manImpos);
+    });
+
+
+
 
     const fetchProductList = async () => {
       const response = await fetch(link);
       const json = await response.json();
+      // get meta
+      const meta = json.data.meta;
+      console.log(meta, "METADATA")
+      console.log(meta.total)
+      setTotalPosts(meta.total);
+      setTotalPages(meta.last_page);
 
       const productList: ProductData[] = json.data.items;
       console.log(productList);
@@ -177,27 +294,36 @@ const Navbar = ({ setLink, setProductList }: Props) => {
           order_date,
           views,
           right_wheel,
-        }) => ({
-          for_rent,
-          category_id,
-          model_id,
-          car_model,
-          man_id,
-          photo,
-          photo_ver,
-          prod_year,
-          car_run_km,
-          engine_volume,
-          car_id,
-          customs_passed,
-          drive_type_id,
-          price,
-          pcide_usd,
-          order_date,
-          views,
-          right_wheel,
-        })
+        }) => {
+          // fetch manufacturer name
+
+          return ({
+            for_rent,
+            category_id,
+            model_id,
+            car_model,
+            man_id,
+            photo,
+            photo_ver,
+            prod_year,
+            car_run_km,
+            engine_volume,
+            car_id,
+            customs_passed,
+            drive_type_id,
+            price,
+            pcide_usd,
+            order_date,
+            views,
+            right_wheel,
+          })
+        }
+
+
+
+
       );
+
       setProductList(filteredProductList);
       setLink(link);
     };
@@ -287,6 +413,8 @@ const Navbar = ({ setLink, setProductList }: Props) => {
             drop={mwarmoebeliOpen}
             setDrop={setMwarmoebeliOpen}
             resetOthers={resetAllDropStates}
+            checkedManData={checkedManData}
+            setCheckedManData={setCheckedManData}
           />
         </div>
         <div className="title">მოდელი</div>
@@ -297,6 +425,7 @@ const Navbar = ({ setLink, setProductList }: Props) => {
             drop={modelOpen}
             setDrop={setModelOpen}
             resetOthers={resetAllDropStates}
+            setModelImpo={setModelImpo}
           />
         </div>
         <div className="title">კატეგორია</div>
@@ -346,7 +475,7 @@ const Navbar = ({ setLink, setProductList }: Props) => {
             ></input>
           </div>
         </div>
-        <button className="search-btn" onClick={search}>
+        <button className="search-btn" onClick={() => search(1)}>
           ძებნა
         </button>
       </div>
