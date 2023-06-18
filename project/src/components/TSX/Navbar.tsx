@@ -11,9 +11,12 @@ import { ProductData } from "../../App";
 
 import { ManData } from "../../App";
 import { CatData } from "../../App";
-import { manImpoType, manModel, CheckData, modelImpoType } from "./OurDataTypes";
-
-
+import {
+  manImpoType,
+  manModel,
+  CheckData,
+  modelImpoType,
+} from "./OurDataTypes";
 
 export interface FilterInformation {
   forRent: number;
@@ -42,8 +45,22 @@ type Props = {
   setTotalPages: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const Navbar = ({ setLink, setProductList, setManImpo, setModelImpo, setTotalPosts, setCurrentPage,
-  setPeriod, setSortOrder, totalPosts, currentPage, period, sortOrder, setTotalPages, totalPages }: Props) => {
+const Navbar = ({
+  setLink,
+  setProductList,
+  setManImpo,
+  setModelImpo,
+  setTotalPosts,
+  setCurrentPage,
+  setPeriod,
+  setSortOrder,
+  totalPosts,
+  currentPage,
+  period,
+  sortOrder,
+  setTotalPages,
+  totalPages,
+}: Props) => {
   const [manList, setManList] = useState<ManData[]>([]);
   const [catList, setCatList] = useState<CatData[]>([]);
   const [manDataToUse, setMandataToUse] = useState<ManData[]>();
@@ -62,9 +79,9 @@ const Navbar = ({ setLink, setProductList, setManImpo, setModelImpo, setTotalPos
       case 0: // car
         return manData.filter(({ is_car }) => is_car == 1); // not ===
       case 1: // moto
-        return manData.filter(({ is_moto }) => is_moto == 1);
-      case 2: // spec
         return manData.filter(({ is_spec }) => is_spec == 1);
+      case 2: // spec
+        return manData.filter(({ is_moto }) => is_moto == 1);
     }
   };
 
@@ -126,11 +143,9 @@ const Navbar = ({ setLink, setProductList, setManImpo, setModelImpo, setTotalPos
     setFilterInfo({ ...filterInfo, to: v });
   };
 
-
   useEffect(() => {
     console.log(filterInfo);
-  }
-    , [filterInfo]);
+  }, [filterInfo]);
 
   useEffect(() => {
     console.log(filterInfo);
@@ -138,7 +153,7 @@ const Navbar = ({ setLink, setProductList, setManImpo, setModelImpo, setTotalPos
   const [checkedManData, setCheckedManData] = useState<CheckData[]>([]);
 
   useEffect(() => {
-    setCurrentPage(1)
+    setCurrentPage(1);
     search(1);
   }, [period, sortOrder]);
   useEffect(() => {
@@ -149,24 +164,23 @@ const Navbar = ({ setLink, setProductList, setManImpo, setModelImpo, setTotalPos
   }, []);
 
   const chosenPer = (num: number) => {
-    let nnum = num
-    let sym = ""
+    let nnum = num;
+    let sym = "";
     if (nnum > 0 && nnum < 4) {
-      console.log("noice")
-      sym = "h"
+      console.log("noice");
+      sym = "h";
     } else if (nnum >= 4 && nnum < 7) {
-      nnum -= 3
-      sym = "d"
+      nnum -= 3;
+      sym = "d";
+    } else if (nnum >= 7) {
+      nnum -= 6;
+      sym = "w";
     }
-    else if (nnum >= 7) {
-      nnum -= 6
-      sym = "w"
-    }
-    const chosenPerStr = nnum + sym
-    return chosenPerStr
-  }
+    const chosenPerStr = nnum + sym;
+    return chosenPerStr;
+  };
 
-  function search(currPage:number) {
+  function search(currPage: number) {
     let manModelLink = "";
     if (filterInfo.models.length === 0) {
       manModelLink = filterInfo.manufacturers.join("-");
@@ -197,32 +211,38 @@ const Navbar = ({ setLink, setProductList, setManImpo, setModelImpo, setTotalPos
       ${filterInfo.forRent == -1 ? "" : "ForRent=" + filterInfo.forRent + "&"}
       ${filterInfo.from == -1 ? "" : "PriceFrom=" + filterInfo.from + "&"}
       ${filterInfo.to == -1 ? "" : "PriceTo=" + filterInfo.to + "&"}
-      ${filterInfo.categories.length == 0 ? "" : "Cats=" + filterInfo.categories.join(".") + "&"}
-      ${filterInfo.manufacturers.length == 0 ? "" : "Mans=" + manModelLink + "&"}`
-
+      ${
+        filterInfo.categories.length == 0
+          ? ""
+          : "Cats=" + filterInfo.categories.join(".") + "&"
+      }
+      ${
+        filterInfo.manufacturers.length == 0 ? "" : "Mans=" + manModelLink + "&"
+      }`;
 
     // remove whitespaces from link
-    link = link.replace(/\s/g, '');
-    let allManList: CheckData[] = manList.map(man => {
-      return { man_name: man.man_name, man_id: man.man_id }
+    link = link.replace(/\s/g, "");
+    let allManList: CheckData[] = manList.map((man) => {
+      return { man_name: man.man_name, man_id: man.man_id };
     });
     if (link === "https://api2.myauto.ge/ka/products/?") {
       // console.log(manList, "MANLIST")
-      useManIds = manList.map((man) => man.man_id)
+      useManIds = manList.map((man) => man.man_id);
 
       const concIds = manList.map((man) => man.man_id).join("-");
       link = "https://api2.myauto.ge/ka/products/?Mans=" + concIds + "&";
     }
-    link = link +
+    link =
+      link +
       `${sortOrder != -1 ? "SortOrder=" + (sortOrder + 1) + "&" : ""}
-    ${period != -1 ? "Period=" + chosenPer(period + 1) : ""}`
-      + `&Page=${currPage}`
+    ${period != -1 ? "Period=" + chosenPer(period + 1) : ""}` +
+      `&Page=${currPage}`;
 
     console.log(link);
     // console.log(filterInfo.categories,"Categories");
 
     const getManImpos = async () => {
-      let manImpos = null
+      let manImpos = null;
       if (useManIds.length === 0) {
         manImpos = await Promise.all(
           checkedManData.map(async (man) => {
@@ -232,12 +252,14 @@ const Navbar = ({ setLink, setProductList, setManImpo, setModelImpo, setTotalPos
             const modelJson = await modelResponse.json();
             console.log(modelJson.data);
 
-            return { manName: man.man_name, manId: man.man_id, models: modelJson.data };
+            return {
+              manName: man.man_name,
+              manId: man.man_id,
+              models: modelJson.data,
+            };
           })
         );
-      }
-      else {
-
+      } else {
         manImpos = await Promise.all(
           allManList.map(async (man) => {
             const modelResponse = await fetch(
@@ -246,11 +268,14 @@ const Navbar = ({ setLink, setProductList, setManImpo, setModelImpo, setTotalPos
             const modelJson = await modelResponse.json();
             // console.log(modelJson.data);
 
-            return { manName: man.man_name, manId: man.man_id, models: modelJson.data };
+            return {
+              manName: man.man_name,
+              manId: man.man_id,
+              models: modelJson.data,
+            };
           })
         );
       }
-
 
       return manImpos;
     };
@@ -259,16 +284,13 @@ const Navbar = ({ setLink, setProductList, setManImpo, setModelImpo, setTotalPos
       setManImpo(manImpos);
     });
 
-
-
-
     const fetchProductList = async () => {
       const response = await fetch(link);
       const json = await response.json();
       // get meta
       const meta = json.data.meta;
-      console.log(meta, "METADATA")
-      console.log(meta.total)
+      console.log(meta, "METADATA");
+      console.log(meta.total);
       setTotalPosts(meta.total);
       setTotalPages(meta.last_page);
 
@@ -297,7 +319,7 @@ const Navbar = ({ setLink, setProductList, setManImpo, setModelImpo, setTotalPos
         }) => {
           // fetch manufacturer name
 
-          return ({
+          return {
             for_rent,
             category_id,
             model_id,
@@ -316,12 +338,8 @@ const Navbar = ({ setLink, setProductList, setManImpo, setModelImpo, setTotalPos
             order_date,
             views,
             right_wheel,
-          })
+          };
         }
-
-
-
-
       );
 
       setProductList(filteredProductList);
